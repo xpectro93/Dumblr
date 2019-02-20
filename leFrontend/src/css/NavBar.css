@@ -1,0 +1,38 @@
+/* #0b0c10 */
+
+.navbar  {
+  background-color:#66fcf1;
+  display:flex;
+  flex-direction: row;
+  list-style: none;
+}
+#navbar1 {
+  width:718px;
+  display:flex;
+  flex-direction: row;
+  float:left;
+}
+#nav-input {
+  width: 540px;
+  height:34px;
+  border-radius: 5px;
+  border-color:grey;
+  background-color:#c0f7f3;
+  margin-top:10px;
+  margin-left:10px
+}
+#navbar2 {
+  width:300px;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top:15px;
+  margin-left:400px;
+}
+#create-post {
+  width:32px;
+  border-style: solid;
+  border-radius:5px;
+  border-color:#5bccc4;
+  background-color: white;
+}
