@@ -1,11 +1,12 @@
-import dashboard from "./dashboard";
+import Dashboard from "./Dashboard";
 import { connect } from "react-redux";
-import { fetchdUsers } from "../../actions/DashboardActions";
+import { fetchUsers } from "../../actions/DashboardActions";
 
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state);
   return {
-    users: state.users
+    users: state.dashboard.users
   };
 };
 
@@ -18,4 +19,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(dashboard);
+)(Dashboard);

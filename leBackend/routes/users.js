@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const passport = require("../auth/local");
+
+const { loginRequired } = require("../auth/helpers");
+
 const { getAllUsers,
         getAUser,
         createUser,
@@ -22,6 +26,7 @@ router.post('/', createUser);
 
 // // DELETE api/users/:id (Allows the user to delete their account)
 router.delete('/:id', deleteUser);
+
 
 
 module.exports = router;

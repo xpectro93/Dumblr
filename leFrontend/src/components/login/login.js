@@ -3,7 +3,7 @@ import LoginNav from './LoginNav'
 import App from '../../App.js'
 import "../../css/Login.css"
 // import { Link } from 'react-router-dom'
-
+// import Logo from '../../assets/logo.gif';
 
 class Login extends Component {
   state = {
@@ -34,7 +34,6 @@ class Login extends Component {
   render(){
     if(this.state.isloggedIn){
       return (
-
          <App/>
 
       )
@@ -44,9 +43,10 @@ class Login extends Component {
           <LoginNav/>
 
         <form onSubmit={this.onSubmit} className="logForm">
-          <input id="sign-input"  placeholder="email" onChange={this.onChange} type="text" name="emailInput" vaue={this.state.emailInput}/>
-          <input id="sign-input1" placeholder="password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
-          <input id="sign-input1" placeholder="username"  onChange={this.onChange} type="text" name="userInput" vaue={this.state.userInput}/>
+
+          <input id="sign-input"  placeholder="Email" onChange={this.onChange} type="text" name="emailInput" vaue={this.state.emailInput}/>
+          <input className="sign-input1" placeholder="Password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
+          <input className="sign-input1" placeholder="Username"  onChange={this.onChange} type="text" name="userInput" vaue={this.state.userInput}/>
           <button id="" type="submit">Sign Up</button>
         </form>
 
@@ -56,10 +56,11 @@ class Login extends Component {
         <div>
         <LoginNav/>
         <div className = "logForm">
-        <button onClick={this.turnTrue} name="newUser" value={!this.state.newUser}>
+
+        <button id="buttonStart" onClick={this.turnTrue} name="newUser" value={!this.state.newUser}>
         Get started
         </button>
-        <button name="isloggedIn" value={!this.state.isloggedIn} onClick={this.turnTrue}>
+        <button  id="buttonStart" name="isloggedIn" value={!this.state.isloggedIn} onClick={this.turnTrue}>
           Log In
         </button>
         </div>

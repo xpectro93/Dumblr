@@ -1,5 +1,6 @@
 import * as Util from '../util.js';
 export const RECEIVE_USERS = "RECEIVE_USERS";
+// import axios from 'axios'
 
 export const receiveUsers = users => {
   return {
@@ -9,7 +10,14 @@ export const receiveUsers = users => {
 }
 
 export const fetchUsers = () => dispatch => {
-  return Util.getUsers().then(user => {
+  // axios
+  //   .get("http://localhost:3100/users")
+  //     .then(user =>
+  //       dispatch({
+  //         type
+  //       }))
+
+   Util.getUsers().then(user => {
     return dispatch(receiveUsers(user.body))
   });
 };

@@ -10,7 +10,7 @@ const normalizeData = arr => {
 
 
 
-const DashboardReducer = (oldState = {}, action) => {
+const DashboardReducer = (oldState = { users: {} }, action) => {
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_USERS:

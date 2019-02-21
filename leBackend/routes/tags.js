@@ -16,7 +16,7 @@ router.get('/:id', getATag);
 router.post('/', createTag);
 
 //GET api/tags/posts/:id
-router.get('/posts/:id',getTagsByPost )
-
+router.get('/posts/:id', getTagsByPost )
+ // loginRequired,
 
 module.exports = router;

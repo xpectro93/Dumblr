@@ -1,2 +1,3 @@
 import axios from 'axios';
-export const getUsers = () => axios.get("http://localhost:3210/users")
+export const getUsers = () => axios.get("http://localhost:3100/users")
+// https://cors-anywhere.herokuapp.com/
