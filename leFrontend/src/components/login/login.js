@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import LoginNav from './LoginNav'
 import App from '../../App.js'
 import "../../css/Login.css"
-// import { Link } from 'react-router-dom'
-// import Logo from '../../assets/logo.gif';
 
 class Login extends Component {
   state = {

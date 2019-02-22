@@ -19,6 +19,7 @@ componentDidMount(){
 }
 
 render(){
+  console.log(this.props);
 
 
   return(
@@ -32,7 +33,6 @@ render(){
       <span id="recommended">Recommended</span>
       <span id="radar" >Radar</span>
       </div>
-
     </div>
   )
   }

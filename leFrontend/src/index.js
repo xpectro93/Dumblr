@@ -14,7 +14,11 @@ import  thunk  from 'redux-thunk';
 
 import { Provider } from 'react-redux';
 
-let store =createStore(RootReducer, { }, compose(applyMiddleware(thunk, logger),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+let initialState = {
+  isLoggedIn:false
+}
+
+let store =createStore(RootReducer, initialState, compose(applyMiddleware(thunk, logger),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 
 

@@ -1,22 +1,32 @@
-import { RECEIVE_USERS } from '../actions/DashboardActions';
+import { FETCH_USERS, NEW_USER } from '../actions/DashboardActions';
 
-const normalizeData = arr => {
-  let obj = {};
-  arr.forEach(item => {
-    obj[item.id] = item;
-  });
-  return obj
+// const normalizeData = arr => {
+//   let obj = {};
+//   arr.forEach(item => {
+//     obj[item.id] = item;
+//   });
+//   return obj
+// }
+
+const initialState = {
+  users: [],
+  user: {}
 }
 
 
-
-const DashboardReducer = (oldState = { users: {} }, action) => {
-  Object.freeze(oldState);
+const DashboardReducer = (state = initialState , action) => {
+  Object.freeze(state);
   switch (action.type) {
-    case RECEIVE_USERS:
-      return normalizeData(action.users)
+    case FETCH_USERS:
+    //users refers to the payload
+      return {
+        ...state,
+          users :action.users
+      }
+    case NEW_USER:
+      return;
     default:
-      return oldState
+      return state
   }
 }
 
