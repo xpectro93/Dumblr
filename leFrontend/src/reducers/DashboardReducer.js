@@ -1,5 +1,5 @@
-import { FETCH_USERS, NEW_USER } from '../actions/DashboardActions';
-
+import { FETCH_USERS, NEW_USER, LOG_IN } from '../actions/DashboardActions';
+import Auth  from '../Auth.js'
 // const normalizeData = arr => {
 //   let obj = {};
 //   arr.forEach(item => {
@@ -10,7 +10,11 @@ import { FETCH_USERS, NEW_USER } from '../actions/DashboardActions';
 
 const initialState = {
   users: [],
-  user: {}
+  user: {},
+  isLoggedIn: null,
+  userId: null,
+  username:null
+
 }
 
 
@@ -24,7 +28,17 @@ const DashboardReducer = (state = initialState , action) => {
           users :action.users
       }
     case NEW_USER:
-      return;
+      return {
+        ...state,
+          user :action.user
+      }
+    case LOG_IN:
+      return {
+        ...state,
+        userId:action.payload.id,
+        username:action.payload.username,
+        isLoggedIn:Auth.isUserAuthenticated()
+      }
     default:
       return state
   }

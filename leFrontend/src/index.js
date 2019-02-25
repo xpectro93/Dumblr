@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import Login from './components/login/login'
+import LoginContainer from './components/login/loginContainer'
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import RootReducer from './reducers/RootReducer'
@@ -15,7 +15,7 @@ import  thunk  from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 let initialState = {
-  isLoggedIn:false
+
 }
 
 let store =createStore(RootReducer, initialState, compose(applyMiddleware(thunk, logger),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
@@ -25,7 +25,7 @@ let store =createStore(RootReducer, initialState, compose(applyMiddleware(thunk,
 ReactDOM.render(
   <Provider store = { store }>
     <BrowserRouter>
-      <Login />
+      <LoginContainer />
     </BrowserRouter>
   </Provider>, document.getElementById('root'));
 

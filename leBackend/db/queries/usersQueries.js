@@ -1,5 +1,7 @@
 const db = require('./index.js');
 
+const authHelpers = require("../../auth/helpers")
+
 const getAllUsers = (req, res, next) => {
   db.any('SELECT * FROM users')
     .then(data => {
@@ -82,7 +84,9 @@ const updateUser = (req, res, next) => {
 };
 
 const createUser = (req, res, next ) => {
-  db.none('INSERT INTO users( username, password, email, bio, pic_url) VALUES(${username},${password}, ${email}, ${bio}, ${pic_url})', req.body)
+
+  const hash = authHelpers.createHash(req.body.password);
+  db.none('INSERT INTO users( username, password, email) VALUES(${username},${password}, ${email})', req.body)
     .then(()=> {
       res.status(200)
         .json({

@@ -3,24 +3,36 @@ import "../../css/Dashboard.css";
 // import axios from "axios"
 
 class Dashboard extends Component {
+state = {
+  emailInput:"",
+  userInput:'',
+  passInput:''
 
-componentDidMount(){
-  this.props.fetchUsers();
-  // console.log(this.props);
-// axios.get('/users')
-//   .then(res => {
-//
-//     console.log(res);
-//
-//   })
-//   .catch(err => {
-//     console.log(err.response)
-//   })
 }
 
-render(){
-  console.log(this.props);
+onChange = e => {
+  this.setState({
+    [e.target.name]:e.target.value
+  })
+}
+onSubmit = e => {
+  e.preventDefault();
+  let newUserData = {
+    username: this.state.userInput,
+    password:this.state.passInput,
+    email:this.state.emailInput
+  }
 
+  this.props.newUser(newUserData)
+
+}
+
+
+render(){
+
+let users = this.props.users.map(user => {
+  return <p key={user.id}>{user.username}</p>
+})
 
   return(
     <div className="Dashboard">
@@ -33,6 +45,7 @@ render(){
       <span id="recommended">Recommended</span>
       <span id="radar" >Radar</span>
       </div>
+
     </div>
   )
   }

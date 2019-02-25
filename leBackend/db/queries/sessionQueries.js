@@ -30,8 +30,9 @@ const loginUser = (req, res)=> {
 }
 
 const isLoggedIn = (req, res) => {
+  
   if (req.user) {
-    res.json({ username: req.user });
+    res.json({ username: req.user});
   } else {
     res.json({ username: null });
   }
