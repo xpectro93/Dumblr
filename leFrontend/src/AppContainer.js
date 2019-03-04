@@ -1,13 +1,11 @@
-import Login from "./login";
+import App from "./App";
 import { connect } from "react-redux";
-import { fetchUsers, newUser,logIn, checkAuthenticateStatus, logout } from "../../actions/DashboardActions";
+import { fetchUsers, newUser,logIn, checkAuthenticateStatus, logout } from "./actions/DashboardActions";
 
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state, ownProps) => {
 
   return {
-    users: state.dashboard.users,
-    user:state.dashboard.user,
     isLoggedIn:state.dashboard.isLoggedIn
   };
 
@@ -26,4 +24,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login));
+)(App));

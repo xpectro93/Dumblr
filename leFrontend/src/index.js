@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import LoginContainer from './components/login/loginContainer'
+import LoginContainer from './components/login/loginContainer';
+// import AppContainer from './AppContainer.js'
+
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import RootReducer from './reducers/RootReducer'
@@ -23,11 +25,11 @@ let store =createStore(RootReducer, initialState, compose(applyMiddleware(thunk,
 
 
 ReactDOM.render(
-  <Provider store = { store }>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Provider store = { store }>
       <LoginContainer />
-    </BrowserRouter>
-  </Provider>, document.getElementById('root'));
+    </Provider>
+  </BrowserRouter>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

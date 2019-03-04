@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import LoginNav from './LoginNav'
 import App from '../../App.js'
 import "../../css/Login.css"
+import  { withRouter } from 'react-router-dom'
+
 
 class Login extends Component {
   state = {
@@ -9,13 +11,14 @@ class Login extends Component {
     userInput:'',
     passInput:'',
     logginIn:false,
-    error:"Halt, you shouldn't be here. Turn bak before its too late!",
     newUser:false
   }
 
   componentDidMount(){
 
-    // this.props.fetchUsers();
+    this.props.checkAuthenticateStatus()
+
+
   }
   onChange = e => {
     this.setState({
@@ -30,6 +33,11 @@ class Login extends Component {
       password: this.state.passInput
     }
     this.props.logIn(logInData);
+
+    //redirects to dashboard
+  setTimeout(()=>{
+    this.props.history.push('/dashboard')
+  },2000)
 
 
   }
@@ -58,20 +66,10 @@ class Login extends Component {
     })
   }
   render(){
-    console.log(this.props.isLoggedIn);
-    // if(this.props.isLoggedIn){
-    // <App/>
-    // }else if (this.state.logginIn){
-    //   login/create
-    // } else if (this.state.newUser) {
-
-  //}
 
   if(this.props.isLoggedIn){
-  return (
-    <div>
-    <App/>
-    </div>)
+  return <App />
+
   }else if(this.state.logginIn){
       return (
         <div>
@@ -81,9 +79,9 @@ class Login extends Component {
           <input className="sign-input1" placeholder="Password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
 
           <button id="" type="submit">Log In</button>
+
         </form>
         </div>
-
       )
     }else if(this.state.newUser){
       return (
@@ -120,4 +118,4 @@ class Login extends Component {
 
   }
 }
-export default Login
+export default withRouter(Login);

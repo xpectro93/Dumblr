@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import "../../css/Dashboard.css";
-// import axios from "axios"
+import { withRouter } from 'react-router'
+
+//Containers
+import MakePost from './MakePost'
+import DashboardPostsContainer from './DashboardPostsContainer'
+
 
 class Dashboard extends Component {
 state = {
   emailInput:"",
   userInput:'',
   passInput:''
+
+}
+
+componentDidMount(){
+  this.props.checkAuthenticateStatus()
 
 }
 
@@ -22,23 +32,33 @@ onSubmit = e => {
     password:this.state.passInput,
     email:this.state.emailInput
   }
-
   this.props.newUser(newUserData)
 
+}
+logMeOut = () => {
+  this.props.logout()
+  this.props.checkAuthenticateStatus()
+  this.props.history.push("/")
 }
 
 
 render(){
 
-let users = this.props.users.map(user => {
-  return <p key={user.id}>{user.username}</p>
-})
+// let users = this.props.users.map(user => {
+//   return <p key={user.id}>{user.username}</p>
+// })
+// <span id='make-post'>Make post</span>
+// <span id="lePost"> This is a post, this is green</span>
 
   return(
     <div className="Dashboard">
+
       <div className = 'left-dash'>
-      <span id='make-post'>Make post</span>
-      <span id="lePost"> This is a post</span>
+
+      <button type="submit" onClick={this.props.logout}>logout</button>
+        <MakePost />
+        <DashboardPostsContainer/>
+
       </div>
 
       <div className="right-dash">
@@ -46,8 +66,10 @@ let users = this.props.users.map(user => {
       <span id="radar" >Radar</span>
       </div>
 
+
+
     </div>
   )
   }
 }
-export default Dashboard
+export default withRouter(Dashboard)

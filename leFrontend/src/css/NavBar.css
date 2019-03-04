@@ -1,10 +1,16 @@
 /* #0b0c10 */
 
 .navbar  {
-  background-color:#66fcf1;
+  width:100%;
+  height:65px;
+  background-color:#0B0c10;
   display:flex;
   flex-direction: row;
   list-style: none;
+  position: fixed;
+  border-image: linear-gradient(to left, #743ad5 0%, #d53a9d 100%);
+  border-image-slice: 1;
+  border-width: 2px;
 }
 #navbar1 {
   width:718px;
@@ -15,11 +21,18 @@
 #nav-input {
   width: 540px;
   height:34px;
-  border-radius: 5px;
-  border-color:grey;
-  background-color:#c0f7f3;
+  /* searchbar button border */
+
+
+
+  background-color:#1f2833;
   margin-top:10px;
-  margin-left:10px
+  margin-left:10px;
+  font-size: 20px;
+  color:silver;
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  font-size:22px;
+  border-radius: 3px;
 }
 #navbar2 {
   width:300px;
@@ -33,6 +46,6 @@
   width:32px;
   border-style: solid;
   border-radius:5px;
-  border-color:#5bccc4;
+  border-color:#e26bef;
   background-color: white;
 }

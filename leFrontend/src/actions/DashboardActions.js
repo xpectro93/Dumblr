@@ -5,93 +5,118 @@ import Auth from "../Auth.js"
 export const FETCH_USERS = "FETCH_USERS";
 export const NEW_USER = "NEW_USER";
 export const LOG_IN = "LOG_IN";
-
+export const LOAD_POSTS = "LOAD_POSTS"
+///////////////////////////////USER AND LOGIN USER ////////
 export const logout = () => dispatch => {
   axios
-    .post("/users/logout")
+    .post("/session/logout")
     .then(() => {
       Auth.deauthenticateUser();
     })
     .then(() => {
+      console.log("in logout");
       checkAuthenticateStatus();
     });
 }
 
 
-const checkAuthenticateStatus = () => dispatch => {
+export const checkAuthenticateStatus = () => dispatch => {
+
   axios
-    .get("/users/isLoggedIn").then(user => {
+    .get("/session/isLoggedIn").then(user => {
+    if (user.data.id === +Auth.getToken()){
 
-    if (user.data.username === Auth.getToken()) {
-
-
-      // this.setState({
-      //   isLoggedIn: Auth.isUserAuthenticated(),
-      //   username: Auth.getToken()
-      // });
-
+      dispatch({
+        type:LOG_IN,
+        payload:user.data
+      })
 
     } else {
-      if (user.data.username) {
+      if (user.data.id) {
         logout()
       } else {
         Auth.deauthenticateUser();
       }
     }
-  });
-};
+  })
 
+  ;
+}
+
+export const newUser = newUserData => dispatch => {
+
+  axios
+  .post("/session/new", newUserData)
+    .then(res => {
+      ;
+      dispatch({
+        type:NEW_USER,
+        user:res
+      })
+      axios
+      .post("/session/login",{username:newUserData.username, password:newUserData.password})
+        .then(res => {
+          console.log(res);
+          Auth.authenticateUser(res.data.id);
+          dispatch({
+            type:LOG_IN,
+            payload:res.data.id
+          })
+        })
+      .then(()=> {
+        console.log('in new User');
+        checkAuthenticateStatus()
+      })
+    })
+
+}
+
+export const logIn = logInData => dispatch => {
+  axios
+  .post("/session/login", logInData)
+    .then(res => {
+      console.log('res of login', res.data);
+      Auth.authenticateUser(res.data.id);
+      dispatch({
+        type:LOG_IN,
+        payload:res.data
+      })
+
+    })
+    .then(()=> {
+      console.log('check auth at login');
+      checkAuthenticateStatus();
+
+    })
+    .catch(err=> {
+      console.log(err);
+    })
+}
+//^^^^^^^^^^^//////END OF LOG IN AND USER TYPES//////////////////^^^^^^^^
+
+///BEGINNING OF ACTUAL USEFUL DASHBOARD TYPES////
+
+export const loadPosts = () => dispatch => {
+  // debugger
+  axios
+    .get('/posts/followings')
+
+      .then(res =>
+        dispatch({
+          type:LOAD_POSTS,
+          posts:res.data.body
+        })
+      )
+}
+
+///USELESS type that was used to learn redux
 export const fetchUsers = () => dispatch => {
   axios
-  .get("http://localhost:3100/users")
+  .get("/users")
     .then(res =>
       dispatch({
         type:FETCH_USERS,
         //.data the key in the res
         users:res.data.body
       }))
-}
-export const newUser = newUserData => dispatch => {
-
-  // e.preventDefault();
-  //
-  // await axios.post("/users/new",  newUserData);
-  //
-  // Auth.authenticateUser(username.newUserData);
-  //
-  // await axios.post("/users/login", { username.newUserData, password.newuserData });
-  //
-  // await this.props.checkAuthenticateStatus();
-
-
-
-  axios
-  .post("http://localhost:3100/session/new", newUserData)
-    .then(res => {
-
-      Auth.authenticateUser(newUserData.username)
-      dispatch({
-        type:NEW_USER,
-        user:res
-      })
-    })
-
-
-}
-
-export const logIn = logInData => dispatch => {
-  axios
-  .post("http://localhost:3100/session/login", logInData)
-    .then(res => {
-      Auth.authenticateUser(logInData.username);
-      dispatch({
-        type:LOG_IN,
-        payload:res.data
-      })
-    })
-    .then(()=> {
-      checkAuthenticateStatus();
-    })
-
-
 }

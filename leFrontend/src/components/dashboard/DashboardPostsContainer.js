@@ -1,26 +1,26 @@
-import Dashboard from "./Dashboard";
+import DashboardPosts from "./DashboardPosts";
 import { connect } from "react-redux";
-import { fetchUsers, newUser, checkAuthenticateStatus, logout } from "../../actions/DashboardActions";
+import {checkAuthenticateStatus, loadPosts,fetchUsers } from "../../actions/DashboardActions";
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    users: state.dashboard.users,
-    user:state.dashboard.user
+    posts: state.dashboard.posts,
+    users:state.dashboard.users
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
-    fetchUsers: () => dispatch(fetchUsers()),
-    newUser: userData => dispatch(newUser(userData)),
+    loadPosts: () => dispatch(loadPosts()),
     checkAuthenticateStatus: () => dispatch(checkAuthenticateStatus()),
-    logout: () => dispatch(logout())
+    fetchUsers: () => dispatch(fetchUsers())
+
   };
 };
 
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard));
+)(DashboardPosts));

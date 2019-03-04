@@ -1,13 +1,14 @@
 .Dashboard {
-  min-height: 100%;
-  background-color:red;
+  min-height: auto;
+  background-color: red;
   color:blue;
   display:flex;
   flex-direction:row;
   width:70%;
   margin:auto;
-  margin-top:45px;
-  justify-content: space-around;
+  margin-bottom:auto;
+  margin-top:75px;
+  /* justify-content: space-around; */
   padding:10px;
   border-radius: 4px;
 }
@@ -18,22 +19,70 @@ display:flex;
 flex-direction: column;
 border-radius: 4px;
 }
+#make-postBox {
+  display:flex;
+  flex-direction: row;
+}
+#make-postBox>img {
+  width:75px;
+  height:75px;
+  border-radius: 5px;
+  margin-right:20px
+}
 
 #make-post {
-  width:100%;
+  width:550px;
   background:white;
-  height:100px;
-  border-radius: 4px;
+  height:90px;
+  border-radius: 5px;
 
+/* controls {post-type} position */
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+}
+
+
+#post-type {
+  width:150px;
+  margin:auto;
+  display:flex;
+  justify-content: center;
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
 
 }
+
+#post-type:hover {
+  transform: scale(1.2);
+}
+/* POSTS */
 #lePost {
   width:100%;
   height:650px;
   background:green;
   border-radius: 4px;
-  margin-top: 5px;
+  margin-top: 20px;
+  display:flex;
+  flex-direction: row;
 }
+
+/* poster pic options */
+#lePost >img {
+  width:75px;
+  height:75px;
+  margin:1px;
+  margin-right:19px;
+
+  border-radius: 5px
+}
+#aPost {
+  width:550px;
+  height:700px;
+  border-style: solid;
+  border-color:red;
+}
+
 .right-dash {
   width:30%;
   display:flex;

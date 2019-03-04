@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER, LOG_IN } from '../actions/DashboardActions';
+import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS } from '../actions/DashboardActions';
 import Auth  from '../Auth.js'
 // const normalizeData = arr => {
 //   let obj = {};
@@ -13,7 +13,11 @@ const initialState = {
   user: {},
   isLoggedIn: null,
   userId: null,
-  username:null
+  username:null,
+  email:"",
+  bio:"",
+
+  posts:[ ]
 
 }
 
@@ -33,11 +37,18 @@ const DashboardReducer = (state = initialState , action) => {
           user :action.user
       }
     case LOG_IN:
+
       return {
         ...state,
-        userId:action.payload.id,
-        username:action.payload.username,
+        userId: +Auth.getToken(),
+        username:action.payload.id,
         isLoggedIn:Auth.isUserAuthenticated()
+      }
+
+    case LOAD_POSTS:
+      return {
+        ...state,
+        posts:action.posts
       }
     default:
       return state
