@@ -3,7 +3,7 @@ import "../../css/Dashboard.css";
 import { withRouter } from 'react-router'
 
 //Containers
-import MakePost from './MakePost'
+import MakePostContainer from './MakePostContainer'
 import DashboardPostsContainer from './DashboardPostsContainer'
 
 
@@ -17,7 +17,6 @@ state = {
 
 componentDidMount(){
   this.props.checkAuthenticateStatus()
-
 }
 
 onChange = e => {
@@ -56,7 +55,7 @@ render(){
       <div className = 'left-dash'>
 
       <button type="submit" onClick={this.props.logout}>logout</button>
-        <MakePost />
+        <MakePostContainer />
         <DashboardPostsContainer/>
 
       </div>

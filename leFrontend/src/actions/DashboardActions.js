@@ -6,6 +6,7 @@ export const FETCH_USERS = "FETCH_USERS";
 export const NEW_USER = "NEW_USER";
 export const LOG_IN = "LOG_IN";
 export const LOAD_POSTS = "LOAD_POSTS"
+export const CURRENT_USER = "CURRENT_USER"
 ///////////////////////////////USER AND LOGIN USER ////////
 export const logout = () => dispatch => {
   axios
@@ -30,6 +31,8 @@ export const checkAuthenticateStatus = () => dispatch => {
         type:LOG_IN,
         payload:user.data
       })
+
+      dispatch(loadCurrent())
 
     } else {
       if (user.data.id) {
@@ -92,6 +95,21 @@ export const logIn = logInData => dispatch => {
       console.log(err);
     })
 }
+export const loadCurrent = () => dispatch => {
+  axios
+  .get(`/users/${+Auth.getToken()}`)
+    .then(res => {
+      dispatch({
+        type:CURRENT_USER,
+        payload:res.data.body
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+}
+
 //^^^^^^^^^^^//////END OF LOG IN AND USER TYPES//////////////////^^^^^^^^
 
 ///BEGINNING OF ACTUAL USEFUL DASHBOARD TYPES////

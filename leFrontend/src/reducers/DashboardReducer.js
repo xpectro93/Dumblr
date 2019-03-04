@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS } from '../actions/DashboardActions';
+import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS, CURRENT_USER } from '../actions/DashboardActions';
 import Auth  from '../Auth.js'
 // const normalizeData = arr => {
 //   let obj = {};
@@ -16,7 +16,7 @@ const initialState = {
   username:null,
   email:"",
   bio:"",
-
+  currentUser: {},
   posts:[ ]
 
 }
@@ -49,6 +49,11 @@ const DashboardReducer = (state = initialState , action) => {
       return {
         ...state,
         posts:action.posts
+      }
+    case CURRENT_USER:
+      return {
+        ...state,
+        currentUser:action.payload
       }
     default:
       return state

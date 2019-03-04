@@ -1,6 +1,6 @@
 import Dashboard from "./Dashboard";
 import { connect } from "react-redux";
-import { fetchUsers, newUser, checkAuthenticateStatus, logout } from "../../actions/DashboardActions";
+import { fetchUsers, newUser, checkAuthenticateStatus, logout, loadCurrent } from "../../actions/DashboardActions";
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = (state, ownProps) => {
@@ -16,7 +16,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchUsers: () => dispatch(fetchUsers()),
     newUser: userData => dispatch(newUser(userData)),
     checkAuthenticateStatus: () => dispatch(checkAuthenticateStatus()),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    loadCurrent: () => dispatch(loadCurrent())
   };
 };
 
