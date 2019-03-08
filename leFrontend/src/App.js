@@ -6,10 +6,10 @@ import './App.css';
 import { NavBar } from './NavBar.js'
 
 // import loginContainer from './components/login/loginContainer.js'
-
+import Search from './components/search/Search.js'
 import DashboardContainer from './components/dashboard/dashboardContainer.js'
-// import LoginContainer from './components/login/loginContainer.js'
-import Explore from './components/explore/Explore.js'
+import ExploreContainer from './components/explore/ExploreContainer.js'
+import ProfileContainer from './components/profile/ProfileContainer.js'
 
 
 class App extends Component {
@@ -26,12 +26,22 @@ class App extends Component {
           <Route path="/dashboard" render={(props) => {
             return <DashboardContainer {...props} />
           }} />
+
           <Route path="/explore" render={(props) => {
-            return <Explore {...props} />
+            return <ExploreContainer {...props} />
           }} />
+          <Route path="/blog" render={(props) => {
+            return <ProfileContainer {...props} />
+          }} />
+
+          <Route path="/search/tag/:id" render={(props) => {
+            return <Search {...props} />
+          }} />
+
           <Route path="/" render={(props) => {
             return <DashboardContainer {...props} />
           }} />
+
 
 
         </Switch>

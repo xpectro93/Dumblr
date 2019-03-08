@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS, CURRENT_USER } from '../actions/DashboardActions';
+import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS, CURRENT_USER, FETCH_TAGS } from '../actions/DashboardActions';
 import Auth  from '../Auth.js'
 // const normalizeData = arr => {
 //   let obj = {};
@@ -16,8 +16,11 @@ const initialState = {
   username:null,
   email:"",
   bio:"",
-  currentUser: {},
-  posts:[ ]
+  currentUser: {
+  pic_url:"https://bloximages.newyork1.vip.townnews.com/kentwired.com/content/tncms/assets/v3/editorial/f/95/f95384b0-edfc-59b2-8b1e-4a6f2c3bc61c/52c5029f44428.image.jpg"
+  },
+  posts:[],
+  tags: []
 
 }
 
@@ -55,6 +58,12 @@ const DashboardReducer = (state = initialState , action) => {
         ...state,
         currentUser:action.payload
       }
+    case FETCH_TAGS:
+    return {
+      ...state,
+      tags:action.payload
+    }
+
     default:
       return state
   }

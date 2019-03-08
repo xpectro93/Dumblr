@@ -11,7 +11,8 @@ class Dashboard extends Component {
 state = {
   emailInput:"",
   userInput:'',
-  passInput:''
+  passInput:'',
+  isOpen:false
 
 }
 
@@ -51,9 +52,7 @@ render(){
 
   return(
     <div className="Dashboard">
-
       <div className = 'left-dash'>
-
       <button type="submit" onClick={this.props.logout}>logout</button>
         <MakePostContainer />
         <DashboardPostsContainer/>

@@ -1,5 +1,4 @@
-import { LOAD_ALL } from '../actions/ExploreActions';
-
+import { LOAD_POSTS } from '../actions/ProfileActions';
 
 // const normalizeData = arr => {
 //   let obj = {};
@@ -14,11 +13,12 @@ const initialState = {
 
 }
 
-const ExploreReducer = (state = initialState , action) => {
+
+const ProfileReducer = (state = initialState , action) => {
   Object.freeze(state);
   switch (action.type) {
 
-    case LOAD_ALL:
+    case LOAD_POSTS:
       return {
         ...state,
         posts:action.posts
@@ -28,4 +28,4 @@ const ExploreReducer = (state = initialState , action) => {
   }
 }
 
-export default ExploreReducer
+export default ProfileReducer

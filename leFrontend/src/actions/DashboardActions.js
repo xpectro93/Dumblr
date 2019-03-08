@@ -7,6 +7,7 @@ export const NEW_USER = "NEW_USER";
 export const LOG_IN = "LOG_IN";
 export const LOAD_POSTS = "LOAD_POSTS"
 export const CURRENT_USER = "CURRENT_USER"
+export const FETCH_TAGS = "FETCH_TAGS"
 ///////////////////////////////USER AND LOGIN USER ////////
 export const logout = () => dispatch => {
   axios
@@ -56,6 +57,7 @@ export const newUser = newUserData => dispatch => {
         type:NEW_USER,
         user:res
       })
+
       axios
       .post("/session/login",{username:newUserData.username, password:newUserData.password})
         .then(res => {
@@ -66,6 +68,14 @@ export const newUser = newUserData => dispatch => {
             payload:res.data.id
           })
         })
+        .then(()=> {
+          // axios
+          //   post("/followings")
+
+        })
+
+
+
       .then(()=> {
         console.log('in new User');
         checkAuthenticateStatus()
@@ -127,14 +137,82 @@ export const loadPosts = () => dispatch => {
       )
 }
 
+export const fetchTags =() => dispatch => {
+
+ axios
+    .get('tags/posts/')
+      .then(res => {
+        dispatch({
+          type:FETCH_TAGS,
+          payload:res.data.body
+        })
+      })
+}
+
+export const makePost = postData => dispatch => {
+  let postFilteredData = {
+      user_id:postData.user_id,
+      type:postData.type,
+      title:postData.title,
+      post:postData.post,
+      description:postData.description
+  }
+//Posts are made here
+  axios
+    .post('/posts',postFilteredData)
+      .then(()=> {
+    //loops through array of tags and adds them to tags
+        arrayLoopAxios(postData.tags)
+      })
+//   .then(()=> {
+// //get tag id based on array
+//
+//   })
+      .then(()=> {
+        dispatch(loadPosts())
+      })
+
+}
+
 ///USELESS type that was used to learn redux
 export const fetchUsers = () => dispatch => {
   axios
   .get("/users")
     .then(res =>
-      dispatch({
+dispatch({
         type:FETCH_USERS,
         //.data the key in the res
         users:res.data.body
       }))
 }
+
+const arrayLoopAxios = arr => {
+  arr.forEach(tag => {
+    console.log(tag);
+    axios.post("tags",{name:tag})
+      .then(res => {
+        console.log(res);
+    })
+  })
+}
+//we got arr of tags  and we can look up a tag by name
+//we need to match the tag in the arr to the name then add the post id with the tag id
+
+//get tag id based on array
+
+// const matchTags = (arr,postId) => {
+//
+//   //match arr tag to tag id
+//   arr.map(el=> {
+//     axios
+//       .get(`/tags/${el}`)
+//         .then(res => {
+//           // tag_id,post_id
+//           // res.data.body.id
+//           axios
+//             .post(`/tags/posts/`,{tag_id:res.data.body.id,post_id:postId})
+//
+//         })
+//   })
+//
+// }

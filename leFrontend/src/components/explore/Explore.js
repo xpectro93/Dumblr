@@ -9,6 +9,10 @@ state = {
   passInput:''
 
 }
+componentDidMount(){
+  this.props.loadAll()
+  // this.props.loadRand()
+}
 
 
 
@@ -16,7 +20,7 @@ state = {
 
 
 render(){
-  console.log("rendering explore!!")
+  console.log(this.props.posts)
 
   return(
     <div className="Explore">

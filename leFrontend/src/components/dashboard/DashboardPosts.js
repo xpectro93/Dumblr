@@ -1,84 +1,169 @@
 
 import React, { Component } from 'react';
-import axios from 'axios'
+import { Link} from 'react-router-dom'
+// import {PostType} from './PostType'
+import Rel from './REL.js'
 
+let defaultUser= "https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"
 
 export default class DashboardPosts extends Component {
+state = {
+  allTags:[],
 
+}
 componentDidMount(){
   this.props.loadPosts()
-// axios
-//   .get('/tags/posts')
-//     .then(res => {
-//       console.log(res);
-//           })
+  this.props.fetchTags()
 }
-getTag =(id)=> {
-  let tagList=[];
-  let final;
-  axios
-    .get(`/tags/posts/${id}`)
-      .then(res => {
-        // console.log(res);
-res.data.body.forEach(tag => {
+embed = str => {
+  let split = str.split("=")
 
-      // console.log(tag);
-
-tagList.push(tag.name)
-  })
-  })
-
-  return typeof tagList
+  let final ="https://www.youtube.com/embed/"+split[1]
+  return final
 }
 
-// var myArr = [];
+getTag = id => this.props.tags.filter(tag => tag.post_id === id).map(el => el.name)
+
+listTags = arr => {
+  let tags =  arr.map(tag => {
+
+      return <li key={tag}><Link to={`/search/tag/${tag}`} >#{tag}</Link></li>
+    })
+    return (
+      <ul>
+      {tags}
+      </ul>
+    )
+}
+// addFollower =e => {
+//   e.preventDefault();
+//   let obj = {
+//     user_id: 12 ,
+//     follower_id:Auth.getToken(),
+//   }
 //
-// var input = {two: 2, four: 4, three: 3, twelve: 12};
-//
-// for (var k in input) {
-//     myArr.push(input[k]);
+//   this.props.addfollower(obj)
 // }
 
 render(){
-console.log(this.getTag(7))
-
-  function shuffle(arra1) {
-    var ctr = arra1.length, temp, index;
-
-// While there are elements in the array
-    while (ctr > 0) {
-// Pick a random index
-        index = Math.floor(Math.random() * ctr);
-// Decrease ctr by 1
-        ctr--;
-// And swap the last element with it
-        temp = arra1[ctr];
-        arra1[ctr] = arra1[index];
-        arra1[index] = temp;
-    }
-    return arra1;
-}
+    // console.log(this.props.tags);
 
   let postList=this.props.posts.map(post => {
-      return (<div id="lePost" key = {post.id}>
-            <img src={post.pic_url}alt="poster profile pic" />
-            <div id="aPost" key={post.id}>
-            <b>{post.username}</b>
-            <p>afds </p>
+    console.log(post);
+    if(post.type ==="PHOTO"){
+      return (  <div id="lePost" key = {post.id}>
+                <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
 
-            </div>
-              </div>
+                <div id="aPost" key={post.id}>
+                  <h3>{post.username}</h3>
+                <img id="post-pic" src={post.post} alt="post" />
+                  <div className="post-body">
+
+                    <div id="tags">
+                    {this.listTags(this.getTag(post.id))}
+                    </div>
+                    <div className="bottom-post">
+
+                    </div>
+                    <Rel loadPosts={this.props.loadPosts}currentUser={this.props.currentUser.id} post={post}/>
+                  </div>
+                </div>
+                </div>
             )
+    }else if (post.type==="TEXT"){
+      return (  <div id="lePost" key = {post.id}>
+                <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
+
+                <div id="aPost" key={post.id}>
+                <h3>{post.username}</h3>
+                <h1>"{post.post}"</h1>
+                  <div className="post-body">
+
+                    <div id="tags">
+                    {this.listTags(this.getTag(post.id))}
+                    </div>
+                    <div className="bottom-post">
+
+                    </div>
+                  <Rel loadPosts={this.props.loadPosts}currentUser={this.props.currentUser.id} post={post}/>
+                  </div>
+                </div>
+                </div>
+            )
+    }else if (post.type==="LINK"){
+      return (
+        <div id="lePost" key = {post.id}>
+                  <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
+
+                  <div id="aPost" key={post.id}>
+                  <h3>{post.username}</h3>
+                  <a href={post.post}>{post.description}</a>
+                    <div className="post-body">
+
+                      <div id="tags">
+                      {this.listTags(this.getTag(post.id))}
+                      </div>
+                      <div className="bottom-post">
+
+                      </div>
+                    <Rel loadPosts={this.props.loadPosts}currentUser={this.props.currentUser.id} post={post}/>
+                    </div>
+                  </div>
+                  </div>
+      )
+    }else if(post.type==="VIDEO"){
+      return (
+        <div id="lePost" key = {post.id}>
+                  <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
+
+                  <div id="aPost" key={post.id}>
+                  <h3>{post.username}</h3>
+                  <embed src={this.embed(post.post)} width="550px" height="400" scale="aspect" controller="true"/>
+                  <p>{post.description}</p>
+
+                    <div className="post-body">
+
+                      <div id="tags">
+                      {this.listTags(this.getTag(post.id))}
+                      </div>
+                      <div className="bottom-post">
+
+                      </div>
+                      <Rel loadPosts={this.props.loadPosts}currentUser={this.props.currentUser.id} post={post}/>
+
+                    </div>
+                  </div>
+                  </div>
+      )
+    }else{
+      return (<h1>WHAT TYPE OF POST IS THIS?</h1>)
+    }
+
+
+
+
 
 
   })
 
-
+if(this.props.posts.length===0){
+  return (
+    <div id="lePost">
+    <img src="http://i.imgur.com/AItCxSs.jpg" alt="poster profile pic" />
+    <div id="aPost">
+    <h1>FOLLOW OTHER USERS TO GET POSTS DISPLAYED, FAM</h1>
+    </div>
+    </div>
+  )
+}
   return (
     <>
-    {shuffle(postList)}
+    {postList}
     </>
   )
+
+
+
 }
 
 }

@@ -3,6 +3,9 @@ import LoginNav from './LoginNav'
 import App from '../../App.js'
 import "../../css/Login.css"
 import  { withRouter } from 'react-router-dom'
+import output from './output.gif';
+// import output2 from './output2.gif';
+
 
 
 class Login extends Component {
@@ -75,6 +78,7 @@ class Login extends Component {
         <div>
         <LoginNav/>
         <form onSubmit={this.onSubmitLogIn} className="logForm">
+          
           <input id="sign-input" placeholder="Username"  onChange={this.onChange} type="text" name="userInput" vaue={this.state.userInput}/>
           <input className="sign-input1" placeholder="Password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
 
@@ -102,7 +106,7 @@ class Login extends Component {
         <div>
         <LoginNav/>
         <div className = "logForm">
-
+        <img src={output} alt='logo'/>
         <button id="buttonStart" onClick={this.turnTrue} name="newUser" value={!this.state.newUser}>
         Get started
         </button>
