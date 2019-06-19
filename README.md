@@ -1,12 +1,12 @@
 # Dumblr
 Tumblr Clone aimed to replicate some features of tumblr.
 
-# Features
+## Features
 - User can make, edit, delete a post.
 - User can follow another user.
 - User can like/unlike another users post.
 
-# Technologiest
+## Technologiest
 - React
 - Redux
 - JavaScript
