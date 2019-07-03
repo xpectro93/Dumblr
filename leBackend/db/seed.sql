@@ -45,7 +45,7 @@ CREATE TABLE posts (
 
 CREATE TABLE post_tags (
   id SERIAL PRIMARY KEY,
-  tag_id INT REFERENCES tags(id),
+  tag_id INT REFERENCES tags(id) ON DELETE CASCADE,
   post_id INT REFERENCES posts(id) ON DELETE CASCADE
 );
 

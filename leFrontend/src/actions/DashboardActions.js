@@ -8,6 +8,7 @@ export const LOG_IN = "LOG_IN";
 export const LOAD_POSTS = "LOAD_POSTS"
 export const CURRENT_USER = "CURRENT_USER"
 export const FETCH_TAGS = "FETCH_TAGS"
+export const ALL_TAGS = "ALL_TAGS"
 ///////////////////////////////USER AND LOGIN USER ////////
 export const logout = () => dispatch => {
   axios
@@ -145,8 +146,19 @@ export const fetchTags =() => dispatch => {
         })
       })
 }
+export const allTags = () => dispatch => {
+  axios
+    .get('/tags/')
+      .then(res => {
+        dispatch({
+          type:ALL_TAGS,
+          payload:res.data.body
+        })
+      })
+}
 
 export const makePost = postData => dispatch => {
+  let tagIds = []
   let postFilteredData = {
       user_id:postData.user_id,
       type:postData.type,
@@ -158,14 +170,12 @@ export const makePost = postData => dispatch => {
   axios
     .post('/posts',postFilteredData)
       .then(()=> {
-    //loops through array of tags and adds them to tags
-        arrayLoopAxios(postData.tags)
+    //posts tags and returns an array of ids
+      tagIds =  arrayLoopAxios(postData.tags)
+      console.log('TagIds',tagIds)
       })
-//   .then(()=> {
-// //get tag id based on array
-//
-//   })
       .then(()=> {
+        //loads posts after a post is made
         dispatch(loadPosts())
       })
 
@@ -182,15 +192,18 @@ dispatch({
         users:res.data.body
       }))
 }
-// we want to see if the the tags are new, if they are we send them to be made, if they are not we add their id
-// number. the new ones that are made will need to add their id numbers
+
+
 const arrayLoopAxios = arr => {
+  let tagIds = []
   arr.forEach(tag => {
     axios.post("/tags",{name:tag})
       .then(res => {
-
+        tagIds.push(res.data.id)
     })
   })
+  return tagIds
+
 }
 // we got arr of tags  and we can look up a tag by name
 // we need to match the tag in the arr to the name then add the post id with the tag id

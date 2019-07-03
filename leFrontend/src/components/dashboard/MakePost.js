@@ -11,12 +11,12 @@ export default class MakePost extends Component {
     post:"",
     caption:"",
     tags: "",
-    description:"",
-    promises:{}
+    description:""
 
   }
   componentDidMount(){
     this.props.checkAuthenticateStatus()
+    this.props.getAllTags()
   }
   onClickText = e => {
 
@@ -51,25 +51,13 @@ export default class MakePost extends Component {
       [e.target.name]:e.target.value
     })
   }
-  //we get an array of tags that want to be added
-  //we check which tags exist, if they exist, we get the id.
-  // if they dont we create them and then get their id.
-  //Put those ids in a request alonside the post number
-  //once linked we have our sucessful post
-
   onSubmitPost = e => {
-
     e.preventDefault();
-    //removes hashtag on tags if they contain them
     let tagArr;
     let answer;
     tagArr =this.state.tags.split(" ").filter(Boolean)
     tagArr = tagArr.map(tag=> tag.replace('#',''))
     console.log('TarArr',tagArr);
-
-
-
-    // this.getTags(tagArr)
 
     let postData = {
       user_id:this.props.currentUser.id,
@@ -77,10 +65,9 @@ export default class MakePost extends Component {
       post: this.state.post,
       tags:tagArr,
       type:this.state.type,
-      description:this.state.description.length === 0 ?null:this.state.description
+      description:this.state.description.length === 0 ? null:this.state.description
     }
 
-    console.log(postData);
     this.props.makePost(postData)
     this.setState({
       type:"",
@@ -97,33 +84,8 @@ export default class MakePost extends Component {
       type:""
     })
   }
-  getTags = (tagArray) => {
-
-    // let promises = []
-    // tagArray.forEach(tagName => {
-    //   let req = axios({
-    //     url:`/tags/${tagName}`
-    //   })
-    //
-    //   promises.push(req)
-    // })
-    //   return Promise.all(promises)
-    //   .then(res => {
-    //       this.setState({
-    //         promises:res
-    //       })
-    //       console.log(this.state.promises);
-    //   })
-
-  }
-  getTags = () => {
-
-  }
-  doesTagExist = tagArr => {
-
-  }
-
   render(){
+    console.log(this.props)
 
     if(this.state.type==="TEXT"){
       return (

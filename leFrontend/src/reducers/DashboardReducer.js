@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS, CURRENT_USER, FETCH_TAGS } from '../actions/DashboardActions';
+import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS, CURRENT_USER, FETCH_TAGS, ALL_TAGS } from '../actions/DashboardActions';
 import Auth  from '../Auth.js'
 // const normalizeData = arr => {
 //   let obj = {};
@@ -20,7 +20,8 @@ const initialState = {
   pic_url:"https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"
   },
   posts:[],
-  tags: []
+  tags: [],
+  allTags:{}
 
 }
 
@@ -62,6 +63,11 @@ const DashboardReducer = (state = initialState , action) => {
     return {
       ...state,
       tags:action.payload
+    }
+    case ALL_TAGS:
+    return {
+      ...state,
+      allTags:action.payload
     }
 
     default:
