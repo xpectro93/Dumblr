@@ -17,10 +17,12 @@ class App extends Component {
 
   render() {
 
+
       return (
         <div className="App">
         <NavBar />
-        <h1>THIS IS APP </h1>
+        <div className="content">
+        <div className="filler"></div>
 
         <Switch>
           <Route path="/dashboard" render={(props) => {
@@ -45,7 +47,7 @@ class App extends Component {
 
 
         </Switch>
-
+        </div>
         </div>
       )
 

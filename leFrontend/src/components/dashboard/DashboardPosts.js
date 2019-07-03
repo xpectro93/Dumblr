@@ -8,12 +8,13 @@ let defaultUser= "https://a.1stdibscdn.com/archivesE/upload/f_30733/f_8876473150
 
 export default class DashboardPosts extends Component {
 state = {
-  allTags:[],
+  allTags:[]
 
 }
 componentDidMount(){
   this.props.loadPosts()
   this.props.fetchTags()
+
 }
 embed = str => {
   let split = str.split("=")
@@ -46,10 +47,9 @@ listTags = arr => {
 // }
 
 render(){
-    // console.log(this.props.tags);
-
-  let postList=this.props.posts.map(post => {
-    console.log(post);
+  console.log(this.props.posts);
+  let postList= this.props.posts ? this.props.posts.map(post => {
+    // console.log(post);
     if(post.type ==="PHOTO"){
       return (  <div id="lePost" key = {post.id}>
                 <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
@@ -76,7 +76,8 @@ render(){
 
                 <div id="aPost" key={post.id}>
                 <h3>{post.username}</h3>
-                <h1>"{post.post}"</h1>
+                <h1>{post.title}</h1>
+                <h4>{post.post}</h4>
                   <div className="post-body">
 
                     <div id="tags">
@@ -144,25 +145,24 @@ render(){
 
 
 
-  })
+  }) : ""
 
-if(this.props.posts.length===0){
-  return (
-    <div id="lePost">
-    <img src="http://i.imgur.com/AItCxSs.jpg" alt="poster profile pic" />
-    <div id="aPost">
-    <h1>FOLLOW OTHER USERS TO GET POSTS DISPLAYED, FAM</h1>
-    </div>
-    </div>
-  )
-}
+  if(this.props.posts===undefined){
+    return (
+      <div id="lePost">
+      <img src={defaultUser} alt="poster profile pic" />
+      <div id="aPost">
+      <h1>FOLLOW OTHER USERS TO GET POSTS DISPLAYED, FAM</h1>
+      </div>
+      </div>
+    )
+  }
+
   return (
     <>
     {postList}
     </>
   )
-
-
 
 }
 

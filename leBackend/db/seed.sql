@@ -29,32 +29,30 @@ CREATE TABLE blogs (
 
 CREATE TABLE tags (
   id SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL
+  name VARCHAR UNIQUE NOT NULL
 );
 
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
+  publish_date TIMESTAMP DEFAULT NOW(),
   blog_id INT REFERENCES blogs(id),
   user_id INT REFERENCES users(id),
+  type VARCHAR,
   title VARCHAR NOT NULL,
-  body VARCHAR,
-  link_title VARCHAR,
-  link_url VARCHAR,
-  url VARCHAR
+  description VARCHAR,
+  post VARCHAR
 );
--- POST-TYPE VARCHAR IF(TEXT, IMG) THEN RENDERS DIFFERENT ON FRONTEND 
-
 
 CREATE TABLE post_tags (
   id SERIAL PRIMARY KEY,
   tag_id INT REFERENCES tags(id),
-  post_id INT REFERENCES posts(id)
+  post_id INT REFERENCES posts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE likes (
   id SERIAL PRIMARY KEY,
-  user_id INT REFERENCES users(id),
-  post_id INT REFERENCES posts(id)
+  user_id INT REFERENCES users(id) ON DELETE CASCADE ,
+  post_id INT REFERENCES posts(id) ON DELETE CASCADE
 );
 
 
@@ -65,8 +63,8 @@ CREATE TABLE followings (
 );
 
 INSERT INTO users(username, password, email,bio,pic_url) VALUES
-('Bro','bruh','broscience@bromail.bro','Nothing Comes between me and my bros, bro. Not even another bro, but hes my bro still. Cause bros stick together, bro. ','https://pbs.twimg.com/profile_images/465854334333640704/yCMzjLkw.jpeg'),
-('Bruh','bro','shredded@bromail.bro','I like to lift, lifting is like totally rad, bro.','https://i1.wp.com/www.dirtopia.com/w/images/thumb/7/7c/Flatbiller.jpg/397px-Flatbiller.jpg'),
+('Bro','Bruh','broscience@bromail.bro','Nothing Comes between me and my bros, bro. Not even another bro, but hes my bro still. Cause bros stick together, bro. ','https://pbs.twimg.com/profile_images/465854334333640704/yCMzjLkw.jpeg'),
+('Bruh','Bro','shredded@bromail.bro','I like to lift, lifting is like totally rad, bro.','https://i1.wp.com/www.dirtopia.com/w/images/thumb/7/7c/Flatbiller.jpg/397px-Flatbiller.jpg'),
 ('Son','yee132','guccigang@gucci.gucci','I love to post about mah shoes and my monies','https://vignette.wikia.nocookie.net/aj-failure-club/images/4/42/Lil_pump.png/revision/latest/scale-to-width-down/310?cb=20180312161827'),
 ('TriggerMeTimbers','hillary2016','equity@lgbt.org','I love to complain and get offended by everything','https://pm1.narvii.com/6121/32e02d2b4e4a739d09dcda592c50dc7035aad2eb_hq.jpg'),
 ('Artsygurl','vangone96','paintBrush@pencil@draw','I like to post about art and complain about how new art is nothing compared to old art','http://cdn3.spiegel.de/images/image-1058142-860_poster_16x9-fnvw-1058142.jpg'),
@@ -76,14 +74,18 @@ INSERT INTO users(username, password, email,bio,pic_url) VALUES
 INSERT INTO blogs(user_id, title) VALUES
 (1,'A Bro Place where we can bro out, bros!'),
 (3,'Sneakers r neat!'),
-(5,'Cat n Doggos');
+(5,'Cat n Doggos'),
+(2,'Ya even lift, bro!');
 
 INSERT INTO tags(name) VALUES
-('pikachu'),('lifting'),('feminism'),('Naruto'),('trump'),('paint'),('cats'),('dogs');
+('pikachu'),('lifting'),('feminism'),('Naruto'),('trump'),('paint'),('cats'),('dogs'),('gundam');
 
-INSERT INTO posts(blog_id,user_id,title, body, link_title,link_url,url) VALUES
-(3,5,'omg so kawaii-desu','This doggo is cute','https://www.youtube.com/watch?v=f9v4AL3SquY','https://media.tenor.com/images/3b5aea40a2c8500afbdd4544489d2a24/tenor.gif','https://thumbs.gfycat.com/MerryExcitableCondor-max-1mb.gif'),
-(3,5,'This is crazyy','So in this post a something cute happens','https://media3.giphy.com/media/nNxT5qXR02FOM/giphy.gif','https://media.giphy.com/media/26FPCXdkvDbKBbgOI/giphy.gif','https://blog.appsee.com/wp-content/uploads/2016/06/cat-drinking.gif');
+
+INSERT INTO posts(blog_id,user_id,type,title, description,post) VALUES
+(3,5,'PHOTO','Cute Doggo','this dog is so cute, omg','http://www.digitaljournal.com/img/8/0/8/6/4/7/i/6/9/0/o/Ugly_dog.jpg'),
+(3,5,'TEXT','Cute kitty','this cat reminds me of my neighbor Sally, LOL','https://cdn.fstoppers.com/styles/large-16-9/s3/lead/2018/12/cat-parody-instagram-removal.jpg');
+
+
 
 INSERT INTO post_tags(tag_id,post_id) VALUES
 (7,2),(8,1),(1,1),(3,1),(5,1);

@@ -1,6 +1,6 @@
 import React from 'react'
 import './css/NavBar.css'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import output from './output.gif';
 const style = {
   width:"40px"
@@ -59,16 +59,16 @@ export const NavBar = () => {
     <nav>
       <div className="navbar">
       <div id="navbar1">
-         <Link to='/dashboard' ><img src={output} alt="leLogo"style={style}/> </Link>
+         <NavLink to='/dashboard' ><img src={output} alt="leLogo"style={style}/> </NavLink>
          <form>
         <input name="searchInput" id="nav-input" type="text"/>
         </form>
         </div>
         <div id="navbar2">
-        <Link to='/dashboard'><img src="https://img.icons8.com/nolan/64/000000/home.png" alt="logo" style={style} /></Link>
-        <Link to='/explore'><img src="https://img.icons8.com/nolan/64/000000/dashboard.png"alt="logo" style={style} /></Link>
-        <Link to='/blog'><img src="https://img.icons8.com/nolan/64/000000/user-male-circle.png" alt="logo" style={style} /></Link>
-        <Link to='/create-post'><img id='create-post' src="https://img.icons8.com/nolan/64/000000/create.png" alt="logo" style={style} /></Link>
+        <li id='nav-button'><NavLink exact to='/dashboard'><img  src="https://img.icons8.com/nolan/64/000000/home.png" alt="logo" style={style} /></NavLink></li>
+        <li id='nav-button'><NavLink exact to='/explore'><img  src="https://img.icons8.com/nolan/64/000000/dashboard.png"alt="logo" style={style} /></NavLink></li>
+        <li id='nav-button'><NavLink exact to='/blog'><img  src="https://img.icons8.com/nolan/64/000000/user-male-circle.png" alt="logo" style={style} /></NavLink></li>
+        <li id='nav-button'><NavLink exact to='/create-post'><img  id='create-post' src="https://img.icons8.com/nolan/64/000000/create.png" alt="logo" style={style} /></NavLink></li>
         </div>
       </div>
     </nav>

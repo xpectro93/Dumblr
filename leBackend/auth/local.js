@@ -6,10 +6,14 @@ const db = require("../db/queries/index.js")
 
 passport.use(
   new LocalStrategy((username, password, done) => {
+    console.log("IN PASSPORT username:",username, " and "," pass: ",password);
+
+
     db.one("SELECT * FROM users WHERE username = ${username}", {
       username: username
     })
       .then(user => {
+        console.log("THIS IS THEN IN PASS AS USER: ",user.id);
         if (!helpers.comparePass(password, user.password)) {
           return done(null, false);
         } else {

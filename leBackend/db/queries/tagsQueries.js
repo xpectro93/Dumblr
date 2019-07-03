@@ -1,7 +1,7 @@
 const db = require('./index.js')
 
 const getAllTags = (req, res, next) => {
-  db.any('SELECT * FROM tags')
+  db.any('SELECT * from tags')
     .then(data => {
       res.status(200).json({
         status: 'Success',
@@ -20,7 +20,7 @@ const getAllTags = (req, res, next) => {
 
 const getATag = ( req, res, next ) => {
   let tagId = req.params.id;
-  db.one('SELECT * FROM tags WHERE id=$1',tagId)
+  db.any('SELECT * FROM tags WHERE name=$1',tagId)
     .then(data => {
       res.status(200)
         .json({
@@ -32,7 +32,8 @@ const getATag = ( req, res, next ) => {
     .catch(err => {
       res.status(404).json({
         status:404,
-        message: 'Could not FIND the User with the tag id: ' + tagId
+        message: 'Could not FIND the Tag with the tag id: ' + tagId,
+        error:err
       })
       next(err)
     });
@@ -55,11 +56,30 @@ const createTag = (req, res, next ) => {
         })
         next(err)
     })
+}
+const createPostTag = (req, res, next ) => {
+  db.none('INSERT INTO post_tags(tag_id,post_id) VALUES(${tag_id},${post_id})', req.body)
+    .then(()=> {
+      res.status(200)
+        .json({
+          status:"Success",
+          message:"New Dumblr Tag and post have been linked"
+        })
+    })
+    .catch(err => {
+      res.status(404)
+        .json({
+          status:404,
+          message:'Something Went wrong! creating the tag pair'
+        })
+        next(err)
+    })
 };
 
 const getTagsByPost = ( req, res, next ) => {
   let postId = req.params.id
-  db.any('SELECT * FROM post_tags WHERE post_id=$1',postId)
+  db.any(`SELECT * FROM tags JOIN post_tags ON post_tags.tag_id = tags.id AND post_id = $1`, postId)
+  // db.any('SELECT * FROM post_tags WHERE post_id=$1',postId)
     .then(data => {
       res.status(200).json({
         status:"Success",
@@ -75,11 +95,31 @@ const getTagsByPost = ( req, res, next ) => {
      next(err)
     })
 };
+//similar to get all tags but it also gets the id of the posts in which they are linked to.
+const getAllTagsOfPost = (req, res, next) => {
+  db.any('SELECT  post_id, name, tag_id FROM tags JOIN post_tags ON post_tags.tag_id = tags.id')
+    .then(data => {
+      res.status(200).json({
+        status: 'Success',
+        message: 'Got all Tags of posts',
+        body: data
+      })
+    })
+    .catch(err => {
+      res.status(404).json({
+        status: 404,
+        message: 'Could not RETRIEVE Tags of posts'
+      })
+      next(err)
+    });
+};
 
 
 module.exports = {
   getAllTags,
   getATag,
   createTag,
-  getTagsByPost
+  getTagsByPost,
+  getAllTagsOfPost,
+  createPostTag
 }

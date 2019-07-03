@@ -52,7 +52,7 @@ export const newUser = newUserData => dispatch => {
   axios
   .post("/session/new", newUserData)
     .then(res => {
-      ;
+
       dispatch({
         type:NEW_USER,
         user:res
@@ -69,13 +69,10 @@ export const newUser = newUserData => dispatch => {
           })
         })
         .then(()=> {
-          // axios
-          //   post("/followings")
+          axios
+            .post("/followings",{user_id:+Auth.getToken(),follower_id:+Auth.getToken()})
 
         })
-
-
-
       .then(()=> {
         console.log('in new User');
         checkAuthenticateStatus()
@@ -185,18 +182,18 @@ dispatch({
         users:res.data.body
       }))
 }
-
+// we want to see if the the tags are new, if they are we send them to be made, if they are not we add their id
+// number. the new ones that are made will need to add their id numbers
 const arrayLoopAxios = arr => {
   arr.forEach(tag => {
-    console.log(tag);
-    axios.post("tags",{name:tag})
+    axios.post("/tags",{name:tag})
       .then(res => {
-        console.log(res);
+
     })
   })
 }
-//we got arr of tags  and we can look up a tag by name
-//we need to match the tag in the arr to the name then add the post id with the tag id
+// we got arr of tags  and we can look up a tag by name
+// we need to match the tag in the arr to the name then add the post id with the tag id
 
 //get tag id based on array
 

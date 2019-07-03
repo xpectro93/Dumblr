@@ -37,8 +37,8 @@ onSubmit = e => {
 }
 logMeOut = () => {
   this.props.logout()
-  this.props.checkAuthenticateStatus()
-  this.props.history.push("/")
+  // this.props.checkAuthenticateStatus()
+  window.location='/'
 }
 
 
@@ -53,15 +53,14 @@ render(){
   return(
     <div className="Dashboard">
       <div className = 'left-dash'>
-      <button type="submit" onClick={this.props.logout}>logout</button>
+      <button type="submit" onClick={this.logMeOut}>logout</button>
         <MakePostContainer />
         <DashboardPostsContainer/>
 
       </div>
 
       <div className="right-dash">
-      <span id="recommended">Recommended</span>
-      <span id="radar" >Radar</span>
+
       </div>
 
 
@@ -71,3 +70,6 @@ render(){
   }
 }
 export default withRouter(Dashboard)
+
+// <span id="recommended">Recommended</span>
+// <span id="radar" >Radar</span>

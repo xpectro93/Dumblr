@@ -1,7 +1,7 @@
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import { loadPosts } from "../../actions/ProfileActions";
-import { checkAuthenticateStatus } from "../../actions/DashboardActions"
+import { checkAuthenticateStatus, logout } from "../../actions/DashboardActions"
 
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state, ownProps) => {
@@ -16,6 +16,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    logout: () => dispatch(logout()),
     loadPosts:()=>dispatch(loadPosts()),
     checkAuthenticateStatus:()=>dispatch(checkAuthenticateStatus())
   };

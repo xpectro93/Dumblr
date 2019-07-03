@@ -1,0 +1,21 @@
+{
+  "name": "Dumblr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node leBackend/bin/www"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xpectro93/Dumblr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xpectro93/Dumblr/issues"
+  },
+  "homepage": "https://github.com/xpectro93/Dumblr#readme"
+}

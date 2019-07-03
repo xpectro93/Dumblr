@@ -68,6 +68,12 @@ class Login extends Component {
       [e.target.name]:e.target.value
     })
   }
+  backtotop = e => {
+    this.setState({
+      logginIn:false,
+      newUser:false
+    })
+  }
   render(){
 
   if(this.props.isLoggedIn){
@@ -78,13 +84,14 @@ class Login extends Component {
         <div>
         <LoginNav/>
         <form onSubmit={this.onSubmitLogIn} className="logForm">
-          
+
           <input id="sign-input" placeholder="Username"  onChange={this.onChange} type="text" name="userInput" vaue={this.state.userInput}/>
           <input className="sign-input1" placeholder="Password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
 
           <button id="" type="submit">Log In</button>
-
+          <button id="" onClick={this.backtotop}>Back</button>
         </form>
+
         </div>
       )
     }else if(this.state.newUser){
@@ -98,6 +105,7 @@ class Login extends Component {
           <input className="sign-input1" placeholder="Password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
           <input className="sign-input1" placeholder="Username"  onChange={this.onChange} type="text" name="userInput" vaue={this.state.userInput}/>
           <button id="" type="submit">Sign Up</button>
+          <button id="" onClick={this.backtotop}>Back</button>
         </form>
 
           </div>)

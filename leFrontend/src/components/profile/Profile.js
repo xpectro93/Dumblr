@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "../../css/Profile.css"
 import MakePostContainer from '../dashboard/MakePostContainer'
 import DashboardPostsContainer from '../dashboard/DashboardPostsContainer'
-
+import { withRouter } from 'react-router-dom'
 
 
 class Profile extends Component {
@@ -15,7 +15,7 @@ class Profile extends Component {
   }
 
   componentDidMount(){
-
+    this.props.logout()
     this.props.checkAuthenticateStatus()
     this.props.loadPosts()
 
@@ -48,6 +48,12 @@ class Profile extends Component {
       [e.target.name]:e.target.value
     })
   }
+
+  logMeOut = () => {
+    // this.props.logout()
+    this.props.checkAuthenticateStatus()
+    this.props.history.push("/Login")
+  }
   render(){
     console.log(this.props.posts);
     return(
@@ -55,7 +61,7 @@ class Profile extends Component {
       <div className ="profile">
       <div className="Dashboard">
         <div className = 'left-dash'>
-        <button type="submit" onClick={this.props.logout}>logout</button>
+        <button type="submit" onClick={this.props.logout()}>logout</button>
           <MakePostContainer />
           <DashboardPostsContainer/>
 
@@ -76,4 +82,4 @@ class Profile extends Component {
 
   }
 }
-export default Profile;
+export default withRouter(Profile);

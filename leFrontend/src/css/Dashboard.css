@@ -1,28 +1,33 @@
 .Dashboard {
   min-height: auto;
   /* background-color: red; */
-  /* color:blue; */
+  color:blue;
   display:flex;
   flex-direction:row;
-  width:70%;
+  width:100%;
   margin:auto;
   margin-bottom:auto;
-  margin-top:75px;
-  /* justify-content: space-around; */
+  padding-top:75px;
+  justify-content: space-around;
   padding:10px;
   border-radius: 4px;
+  align-self: center
 }
 
 .left-dash {
-width:65%;
-display:flex;
-flex-direction: column;
-border-radius: 4px;
+  width:65%;
+  display:flex;
+  flex-direction: column;
+  border-radius: 4px;
 }
+
 #make-postBox {
   display:flex;
   flex-direction: row;
+
+  transition: all 2s ease-in-out
 }
+
 #make-postBox>img {
   width:75px;
   height:75px;
@@ -75,6 +80,7 @@ a {
   display: flex;
   flex-direction: row;
   justify-content:space-between;
+  margin-bottom:2%;
 }
 #submit-form>button {
   width:50px;
@@ -145,20 +151,24 @@ h2 {
   background-color:white;
   border-radius: 4px;
 }
-h1 {
+#aPost h1 {
   margin-left: 25px;
+  margin-bottom: 25px;
 }
 #aPost > h1 {
   font-family: 'Titillium Web', sans-serif;
 
 }
-h3 {
-  margin-left:20px;
+#aPost h3 {
+  margin-left:25px;
   margin-top:20px;
   margin-bottom:20px;
   color:black;
   font-size: 20px;
   font-family: 'Titillium Web', sans-serif;
+}
+#aPost h4 {
+  margin-left:25px;
 }
 .post-body {
   margin:20px;

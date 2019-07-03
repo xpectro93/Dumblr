@@ -1,8 +1,10 @@
 const db = require('./index.js');
 
 const getAllPosts = (req, res, next) => {
+  console.log(req.user);
   db.any('SELECT * FROM posts')
     .then(data => {
+
       res.status(200).json({
         status: 'Success',
         message: 'Got all Posts',
@@ -33,13 +35,32 @@ const getAPost = ( req, res, next ) => {
     .catch(err => {
       res.status(404).json({
         status:404,
+        message: 'Could not FIND the Post with the id: ' + postId
+      })
+      next(err)
+    });
+};
+const getAllPostById = ( req, res, next ) => {
+  let userId = req.user
+  db.any('SELECT * FROM posts WHERE user_id=$1 ORDER BY publish_date desc',userId)
+    .then(data => {
+      res.status(200)
+        .json({
+          status: "Success",
+          message:"We got'em, boys!",
+          body: data
+        })
+    })
+    .catch(err => {
+      res.status(404).json({
+        status:404,
         message: 'Could not FIND the Post with the id: ' + userId
       })
       next(err)
     });
 };
 
-//
+
 const updatePost = (req, res, next) => {
   let queryStringArray = [];
   let bodyKeys = Object.keys(req.body);
@@ -47,21 +68,20 @@ const updatePost = (req, res, next) => {
     queryStringArray.push(key + "=${" + key + "}");
   });
   let queryString = queryStringArray.join(", ");
+
+  if (req.body.type && req.body.type.toLowerCase() === "null") {
+    req.body.type = null;
+  }
   if (req.body.title && req.body.title.toLowerCase() === "null") {
     req.body.title = null;
   }
-  if (req.body.body && req.body.body.toLowerCase() === "null") {
-    req.body.body = null;
+  if (req.body.description && req.body.description.toLowerCase() === "null") {
+    req.body.description = null;
   }
-  if (req.body.link_title && req.body.link_title.toLowerCase() === "null") {
-    req.body.link_title = null;
+  if (req.body.post && req.body.post.toLowerCase() === "null") {
+    req.body.post = null;
   }
-  if (req.body.link_url && req.body.link_url.toLowerCase() === "null") {
-    req.body.link_url = null;
-  }
-  if (req.body.url && req.body.url.toLowerCase() === "null") {
-    req.body.url = null;
-  }
+
   db.none(
       "UPDATE posts SET " + queryString + " WHERE id=" + req.params.id,
       req.body
@@ -82,22 +102,19 @@ const updatePost = (req, res, next) => {
 };
 
 const createPost = (req, res, next ) => {
-  db.none('INSERT INTO posts( blog_id, user_id, title, body, link_title, link_url, url) VALUES(${blog_id},${user_id}, ${title}, ${body}, ${link_title},${link_url},${url})', req.body)
-    .then(()=> {
-      res.status(200)
-        .json({
-          status:"Success",
-          message:"New Dumblr Post has been CREATED!"
+  let tagId
+  db.one('INSERT INTO posts(user_id, type, title, description, post) VALUES(${user_id}, ${type},${title}, ${description}, ${post}) RETURNING id', req.body)
+    .then((data)=> {
+        db.none('INSERT INTO post_tags(tag_id,post_id) VALUES(${tag_id},${post_id})',{tag_id:1,post_id:data.id})
+        .then(()=> {
+          res.status(200)
+            .json({
+              status:"Success",
+              message:"New Post Created"
+            })
         })
     })
-    .catch(err => {
-      res.status(404)
-        .json({
-          status:404,
-          message:'Something Went wrong! Could not CREATE Post'
-        })
-        next(err)
-    })
+    .catch(err => next(err))
 };
 
 
@@ -141,6 +158,54 @@ const getPostsByTag = ( req, res, next ) => {
     })
 };
 
+const getPostsByFollowing = ( req, res, next ) => {
+
+  let userId = req.user
+  // let userId = req.params.id
+  db.any("SELECT posts.*, users.pic_url, bio , username FROM posts JOIN users ON posts.user_id = users.id JOIN followings ON users.id = followings.user_id AND follower_id = $1 ORDER BY publish_date desc", userId)
+  // db.any("SELECT posts.* FROM posts JOIN followings ON posts.user_id = followings.user_id AND follower_id =$1", userId)
+    .then(data => {
+      if(data.length<1){
+        res.status(200).json({
+          status:200,
+          message:"Theres nuthin' hea"
+        })
+      }
+      res.status(200).json({
+        status:"Success",
+        message: 'Got all Posts by follower id: ' + userId,
+        body:data
+      })
+    })
+    .catch(err => {
+      res.status(404).json({
+        status:404,
+        message:'Something Went wrong! Could not GET posts by followee id'
+      })
+     next(err)
+    })
+};
+
+// const getAllPostsByTagsName = (req, res, next) => {
+//     let params = req.params.tag
+//     db.any("SELECT POST_ID,  POST_TYPE, TEXT_TITLE, TEXT_BODY, PUBLISH_DATE, MEDIA_URL, array_agg(TAG_NAME) FROM POSTS JOIN POST_TAG ON POSTS.ID = POST_TAG.POST_ID JOIN TAGS ON TAGS.ID = POST_TAG.TAG_ID WHERE TAG_NAME LIKE ${params} GROUP BY POST_ID, POST_TYPE, TEXT_TITLE, TEXT_BODY, PUBLISH_DATE, MEDIA_URL", {
+//       params: "%" + req.params.tag + "%"
+//     }).then((data) => {
+//       res.status(200).json({
+//         status: 200,
+//         message: "Complete",
+//         data: data,
+//         request: req.params.tag
+//       })
+//     }).catch(err => {
+//       res.json({
+//         status: 404,
+//         STATUS: "FAIL",
+//         error: err.message
+//       })
+//     })
+//   }
+
 
 module.exports = {
   getAllPosts,
@@ -148,5 +213,7 @@ module.exports = {
   createPost,
   updatePost,
   deletePost,
-  getPostsByTag
+  getPostsByTag,
+  getPostsByFollowing,
+  getAllPostById
 }

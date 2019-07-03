@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 
 
 
-const defaultPic = "http://www.clutchorkickcomics.com/wp-content/uploads/2015/04/Kevin-Profile-Picture.png"
+const defaultPic ="https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"
 export default class MakePost extends Component {
   state = {
     type:"",
@@ -10,7 +11,8 @@ export default class MakePost extends Component {
     post:"",
     caption:"",
     tags: "",
-    description:""
+    description:"",
+    promises:{}
 
   }
   componentDidMount(){
@@ -49,18 +51,35 @@ export default class MakePost extends Component {
       [e.target.name]:e.target.value
     })
   }
+  //we get an array of tags that want to be added
+  //we check which tags exist, if they exist, we get the id.
+  // if they dont we create them and then get their id.
+  //Put those ids in a request alonside the post number
+  //once linked we have our sucessful post
 
   onSubmitPost = e => {
 
     e.preventDefault();
+    //removes hashtag on tags if they contain them
+    let tagArr;
+    let answer;
+    tagArr =this.state.tags.split(" ").filter(Boolean)
+    tagArr = tagArr.map(tag=> tag.replace('#',''))
+    console.log('TarArr',tagArr);
+
+
+
+    // this.getTags(tagArr)
+
     let postData = {
       user_id:this.props.currentUser.id,
-      title:this.state.description,
+      title:this.state.title,
       post: this.state.post,
-      tags: this.state.tags.split(" ").filter(Boolean),
+      tags:tagArr,
       type:this.state.type,
-      description:this.state.description.length===0?null:this.state.description
+      description:this.state.description.length === 0 ?null:this.state.description
     }
+
     console.log(postData);
     this.props.makePost(postData)
     this.setState({
@@ -77,6 +96,31 @@ export default class MakePost extends Component {
     this.setState({
       type:""
     })
+  }
+  getTags = (tagArray) => {
+
+    // let promises = []
+    // tagArray.forEach(tagName => {
+    //   let req = axios({
+    //     url:`/tags/${tagName}`
+    //   })
+    //
+    //   promises.push(req)
+    // })
+    //   return Promise.all(promises)
+    //   .then(res => {
+    //       this.setState({
+    //         promises:res
+    //       })
+    //       console.log(this.state.promises);
+    //   })
+
+  }
+  getTags = () => {
+
+  }
+  doesTagExist = tagArr => {
+
   }
 
   render(){
@@ -171,12 +215,12 @@ export default class MakePost extends Component {
     else {
       return(
         <div id="make-postBox">
-              <img src={this.props.currentUser.pic_url?this.props.currentUser.pic_url:"http://www.clutchorkickcomics.com/wp-content/uploads/2015/04/Kevin-Profile-Picture.png"}alt="test"/>
+              <img src={this.props.currentUser.pic_url?this.props.currentUser.pic_url:"https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"}alt="test"/>
             <div id='make-post' >
-              <span onClick={this.onClickText}  id="post-type" ><img src="https://img.icons8.com/nolan/64/000000/text-box.png" alt="text post"/></span>
-              <span onClick={this.onClickPhoto}   id="post-type" ><img src="https://img.icons8.com/nolan/64/000000/compact-camera.png" alt="post"/></span>
-              <span onClick={this.onClickLink}   id="post-type" ><img src="https://img.icons8.com/nolan/64/000000/link.png" alt="link post"/></span>
-              <span onClick={this.onClickVideo}   id="post-type" ><img src="https://img.icons8.com/nolan/64/000000/camcorder-pro.png" alt="video post"/></span>
+              <span onClick={this.onClickText}  id="post-type"><img src="https://img.icons8.com/nolan/64/000000/text-box.png" alt="text post"/></span>
+              <span onClick={this.onClickPhoto} id="post-type"><img src="https://img.icons8.com/nolan/64/000000/compact-camera.png" alt="post"/></span>
+              <span onClick={this.onClickLink}  id="post-type"><img src="https://img.icons8.com/nolan/64/000000/link.png" alt="link post"/></span>
+              <span onClick={this.onClickVideo} id="post-type"><img src="https://img.icons8.com/nolan/64/000000/camcorder-pro.png" alt="video post"/></span>
             </div>
 
         </div>

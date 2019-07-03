@@ -13,8 +13,8 @@ const { loginRequired } = require("../auth/helpers");
 
 /* GET users listing. */
 router.post("/new",createUser);
-router.post("/login", passport.authenticate("local", {}),loginUser);
-router.get("/isLoggedIn",isLoggedIn);
-router.post("/logout", loginRequired,logoutUser);
+router.post("/login", passport.authenticate("local", {}), loginUser);
+router.get("/isLoggedIn", isLoggedIn);
+router.post("/logout", loginRequired, logoutUser);
 
 module.exports = router;

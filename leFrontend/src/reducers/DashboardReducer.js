@@ -17,7 +17,7 @@ const initialState = {
   email:"",
   bio:"",
   currentUser: {
-  pic_url:"https://bloximages.newyork1.vip.townnews.com/kentwired.com/content/tncms/assets/v3/editorial/f/95/f95384b0-edfc-59b2-8b1e-4a6f2c3bc61c/52c5029f44428.image.jpg"
+  pic_url:"https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"
   },
   posts:[],
   tags: []
