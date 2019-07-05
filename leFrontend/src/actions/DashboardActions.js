@@ -158,9 +158,6 @@ export const allTags = () => dispatch => {
 }
 
 export const makePost = postData => async dispatch => {
-  let tagIds = []
-  let finalArr = []
-  let alreadyIn = []
   let postFilteredData = {
       user_id:postData.user_id,
       type:postData.type,
@@ -168,28 +165,30 @@ export const makePost = postData => async dispatch => {
       post:postData.post,
       description:postData.description
   }
-     alreadyIn = postData.alreadyIn
-  //Posts are made here
-    tagIds =  await arrayLoopAxios(postData.notIn)
-
-    finalArr = alreadyIn.concat(tagIds)
-  axios
-    .post('/posts',postFilteredData)
-      .then((res)=> {
-        console.log('post id :D',res.data.id)    
-      })
-      .then(()=> {
-        console.log('AlreaydIn @ actions', postData.alreadyIn[0])
-        console.log('notIn @ actions', tagIds[0])
-
-      console.log('Final',finalArr)
-
-      })
-      .then(() => {
-
-        dispatch(loadPosts())
-      })
-
+    let tagIds =  await arrayLoopAxios(postData.notIn)
+    let partTwo = Object.values(tagIds)
+    console.log('thisIsTagIds',tagIds.length)
+    let alreadyIn = postData.alreadyIn
+    let finalArr = partTwo.concat(alreadyIn)
+    let postRes = await axios.post('/posts',postFilteredData)
+    console.log('finalArr',finalArr)
+    console.log('postRes',postRes.data.id)
+    dispatch(loadPosts())
+    // axios
+    // .post('/posts',postFilteredData)
+    //   .then((res)=> {
+    //     console.log('post id :D',res.data.id)
+    //   })
+    //   .then(()=> {
+    //     console.log('AlreaydIn @ actions', postData.alreadyIn)
+    //
+    //   console.log('Final',finalArr)
+    //
+    //   })
+    //   .then(() => {
+    //
+    //     dispatch(loadPosts())
+    //   })
 }
 
 ///USELESS type that was used to learn redux
@@ -204,16 +203,22 @@ dispatch({
       }))
 }
 
-
 const arrayLoopAxios = arr => {
-  let tagIds = []
+
   arr.forEach(tag => {
-    axios.post("/tags",{name:tag})
-      .then(res => {
-        tagIds.push(res.data.id)
-    })
+  axios.post('/tags',{name:tag})
+
   })
-  return tagIds
+  // let tagIdsArr = arr.map(tag => {
+  //   axios.post("/tags",{name:tag})
+  //     .then(res => {
+  //       console.log(typeof res.data.id)
+  //       apple.push(res.data.id)
+  //   })
+  //   return tagIdsArr
+  //
+  // })
+  return
 
 }
 // we got arr of tags  and we can look up a tag by name

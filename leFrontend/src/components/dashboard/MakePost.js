@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 
+// getUsers = async () => {
+//     let res = await axios.get("https://reqres.in/api/users?page=1");
+//     let { data } = res.data;
+//     this.setState({ users: data });
+// };
 
 
 const defaultPic ="https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"
