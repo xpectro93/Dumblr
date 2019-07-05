@@ -40,20 +40,9 @@ const getATag = ( req, res, next ) => {
 };
 
 const createTag = (req, res, next ) => {
-  // req.body => {name:'nameOfTag'}
-  // get back an arr;
-  //got though array and for each name we create a query
-  let bodyValues = Object.values(arr)
 
-  bodyValues = bodyValues[0]
-  let queryStringArray = [];
 
-   bodyValues.forEach(val => {
-   queryStringArray.push( "(${" + val + "})")
-  })
-  let joined = queryStringArray.join(',')
-  // db.any('INSERT INTO tags(name) VALUES ' + joined + ' RETURNING id')
-    db.any('INSERT INTO tags(name) VALUES(${name}) RETURNING id', req.body)
+    db.one('INSERT INTO tags(name) VALUES(${name}) RETURNING id', req.body)
     .then((data)=> {
         console.log(data.id)
       res.status(200)

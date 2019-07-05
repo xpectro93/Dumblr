@@ -1,6 +1,6 @@
 import MakePost from "./MakePost";
 import { connect } from "react-redux";
-import {fetchUsers, checkAuthenticateStatus, makePost, allTags } from "../../actions/DashboardActions";
+import {fetchUsers, checkAuthenticateStatus, makePost, allTags, arrayLoopAxios, loadPosts } from "../../actions/DashboardActions";
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = (state, ownProps) => {
@@ -18,7 +18,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchUsers: () => dispatch(fetchUsers()),
     checkAuthenticateStatus:() => dispatch(checkAuthenticateStatus()),
     makePost: postData => dispatch(makePost(postData)),
-    getAllTags: () => dispatch(allTags())
+    getAllTags: () => dispatch(allTags()),
+    arrayLoopAxios: arr => dispatch(arrayLoopAxios(arr)),
+    loadPosts: () => dispatch(loadPosts())
 
   };
 };

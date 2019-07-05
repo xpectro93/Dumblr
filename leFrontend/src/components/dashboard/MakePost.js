@@ -56,7 +56,7 @@ export default class MakePost extends Component {
       [e.target.name]:e.target.value
     })
   }
-  onSubmitPost = e => {
+  onSubmitPost = async e => {
     e.preventDefault();
 
     let tagArr;
@@ -76,35 +76,38 @@ export default class MakePost extends Component {
         notIn.push(tag)
       }
     })
-    console.log('alreadyIn', alreadyIn)
 
+    let response = await this.props.arrayLoopAxios(notIn)
+    let cleanNot = response.map(prom => prom.data.id)
+    let final = cleanNot.concat(alreadyIn)
 
     let postData = {
       user_id:this.props.currentUser.id,
       title:this.state.title,
       post: this.state.post,
-      notIn:notIn,
-      alreadyIn:alreadyIn,
+      tags:final,
       type:this.state.type,
-      description:this.state.description.length === 0 ? null:this.state.description
-    }
-
+      description:this.state.description.length === 0 ? null : this.state.description
+    };
     this.props.makePost(postData)
+
     this.setState({
       type:"",
       title: "",
       post:"",
       caption:"",
       tags: ""
-    })
+    });
+
   }
 
-  typeNull = (e) => {
+  typeNull = e => {
     e.preventDefault();
     this.setState({
       type:""
     })
   }
+
   render(){
     // console.log(this.props.allTags)
 

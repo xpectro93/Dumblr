@@ -164,31 +164,13 @@ export const makePost = postData => async dispatch => {
       title:postData.title,
       post:postData.post,
       description:postData.description
-  }
-    let tagIds =  await arrayLoopAxios(postData.notIn)
-    let partTwo = Object.values(tagIds)
-    console.log('thisIsTagIds',tagIds.length)
-    let alreadyIn = postData.alreadyIn
-    let finalArr = partTwo.concat(alreadyIn)
+      }
+
     let postRes = await axios.post('/posts',postFilteredData)
-    console.log('finalArr',finalArr)
-    console.log('postRes',postRes.data.id)
+    let resp = await dispatch(linkPostwithTags(postRes.data.id, postData.tags));
+    console.log(resp)
     dispatch(loadPosts())
-    // axios
-    // .post('/posts',postFilteredData)
-    //   .then((res)=> {
-    //     console.log('post id :D',res.data.id)
-    //   })
-    //   .then(()=> {
-    //     console.log('AlreaydIn @ actions', postData.alreadyIn)
-    //
-    //   console.log('Final',finalArr)
-    //
-    //   })
-    //   .then(() => {
-    //
-    //     dispatch(loadPosts())
-    //   })
+
 }
 
 ///USELESS type that was used to learn redux
@@ -196,46 +178,39 @@ export const fetchUsers = () => dispatch => {
   axios
   .get("/users")
     .then(res =>
-dispatch({
+      dispatch({
         type:FETCH_USERS,
         //.data the key in the res
         users:res.data.body
       }))
 }
 
-const arrayLoopAxios = arr => {
-  let something;
-      axios.post('/tags',{name:arr})
-      .then(res => {
-        console.log('THIS IS RES',res)
-      })
+export const arrayLoopAxios =  arr => async dispatch => {
 
+    let promises = [];
+    arr.forEach( tag => {
+     let req =  axios({
+       method: 'POST',
+       url:`/tags`,
+       data: {name:tag}
+     })
+     promises.push(req)
+    })
+    let results = await axios.all(promises)
 
-
-
-  return;
-
+    return results
 }
+export const linkPostwithTags = (id,tags) => async dispatch => {
 
-
-// we got arr of tags  and we can look up a tag by name
-// we need to match the tag in the arr to the name then add the post id with the tag id
-
-//get tag id based on array
-
-// const matchTags = (arr,postId) => {
-//
-//   //match arr tag to tag id
-//   arr.map(el=> {
-//     axios
-//       .get(`/tags/${el}`)
-//         .then(res => {
-//           // tag_id,post_id
-//           // res.data.body.id
-//           axios
-//             .post(`/tags/posts/`,{tag_id:res.data.body.id,post_id:postId})
-//
-//         })
-//   })
-//
-// }
+ let promises = [];
+ tags.forEach( tag => {
+   let req =  axios({
+     method: 'POST',
+     url:`/tags/posts`,
+     data: {tag_id:tag, post_id:id}
+   })
+   promises.push(req)
+ })
+ await axios.all(promises)
+ return true;
+}
