@@ -1,12 +1,14 @@
 import { FETCH_USERS, NEW_USER, LOG_IN, LOAD_POSTS, CURRENT_USER, FETCH_TAGS, ALL_TAGS } from '../actions/DashboardActions';
 import Auth  from '../Auth.js'
-// const normalizeData = arr => {
-//   let obj = {};
-//   arr.forEach(item => {
-//     obj[item.id] = item;
-//   });
-//   return obj
-// }
+const normalizeData = arr => {
+
+  let obj = {};
+
+  arr.forEach(item => {
+    obj[item.name] = item.id
+  });
+  return obj
+}
 
 const initialState = {
   users: [],
@@ -21,8 +23,7 @@ const initialState = {
   },
   posts:[],
   tags: [],
-  allTags:{}
-
+  allTags:[]
 }
 
 
@@ -67,7 +68,7 @@ const DashboardReducer = (state = initialState , action) => {
     case ALL_TAGS:
     return {
       ...state,
-      allTags:action.payload
+      allTags: normalizeData(action.payload)
     }
 
     default:

@@ -104,17 +104,14 @@ const updatePost = (req, res, next) => {
 const createPost = (req, res, next ) => {
   let tagId;
   db.one('INSERT INTO posts(user_id, type, title, description, post) VALUES(${user_id}, ${type},${title}, ${description}, ${post}) RETURNING id', req.body)
-    .then((data)=> {
-        db.none('INSERT INTO post_tags(tag_id,post_id) VALUES(${tag_id},${post_id})',{tag_id:1,post_id:data.id})
-        .then(()=> {
+    .then( data => {
           res.status(200)
             .json({
               status:"Success",
-              message:"New Post Created"
-            })
-        })
-    })
-    .catch(err => next(err))
+              message:"New Post Created",
+              id:data.id
+            })}
+          ).catch(err => next(err))
 };
 
 

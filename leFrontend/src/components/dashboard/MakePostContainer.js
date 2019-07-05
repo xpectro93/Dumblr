@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
     fetchUsers: () => dispatch(fetchUsers()),
-    checkAuthenticateStatus:()=>dispatch(checkAuthenticateStatus()),
+    checkAuthenticateStatus:() => dispatch(checkAuthenticateStatus()),
     makePost: postData => dispatch(makePost(postData)),
     getAllTags: () => dispatch(allTags())
 

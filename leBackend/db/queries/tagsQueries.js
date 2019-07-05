@@ -41,26 +41,6 @@ const getATag = ( req, res, next ) => {
 
 const createTag = (req, res, next ) => {
 
-  // let queryStringArray = [];
-  // let bodyKeys = Object.keys(req.body);
-  // bodyKeys.forEach(key => {
-  //   queryStringArray.push(key + "=${" + key + "}");
-  // });
-  // let queryString = queryStringArray.join(", ");
-
-  // if (req.body.type && req.body.type.toLowerCase() === "null") {
-  //   req.body.type = null;
-  // }
-  // if (req.body.title && req.body.title.toLowerCase() === "null") {
-  //   req.body.title = null;
-  // }
-  // if (req.body.description && req.body.description.toLowerCase() === "null") {
-  //   req.body.description = null;
-  // }
-  // if (req.body.post && req.body.post.toLowerCase() === "null") {
-  //   req.body.post = null;
-  // }
-
   db.one('INSERT INTO tags(name) VALUES(${name}) RETURNING id', req.body)
     .then((data)=> {
         console.log(data.id)

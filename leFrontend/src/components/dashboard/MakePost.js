@@ -53,17 +53,33 @@ export default class MakePost extends Component {
   }
   onSubmitPost = e => {
     e.preventDefault();
+
     let tagArr;
     let answer;
     tagArr =this.state.tags.split(" ").filter(Boolean)
-    tagArr = tagArr.map(tag=> tag.replace('#',''))
-    console.log('TarArr',tagArr);
+    tagArr = tagArr.map(tag => tag.replace('#',''))
+    //has ids of tags already in;
+    let alreadyIn = []
+    //has tags that need to be added;
+    let notIn = []
+
+    //adds to alreadyIn and notIn arrays
+    tagArr.forEach(tag => {
+      if(this.props.allTags[tag]){
+        alreadyIn.push(this.props.allTags[tag])
+      }else{
+        notIn.push(tag)
+      }
+    })
+    console.log('alreadyIn', alreadyIn)
+
 
     let postData = {
       user_id:this.props.currentUser.id,
       title:this.state.title,
       post: this.state.post,
-      tags:tagArr,
+      notIn:notIn,
+      alreadyIn:alreadyIn,
       type:this.state.type,
       description:this.state.description.length === 0 ? null:this.state.description
     }
@@ -85,7 +101,7 @@ export default class MakePost extends Component {
     })
   }
   render(){
-    console.log(this.props)
+    // console.log(this.props.allTags)
 
     if(this.state.type==="TEXT"){
       return (

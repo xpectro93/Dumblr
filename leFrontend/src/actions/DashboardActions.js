@@ -157,8 +157,10 @@ export const allTags = () => dispatch => {
       })
 }
 
-export const makePost = postData => dispatch => {
+export const makePost = postData => async dispatch => {
   let tagIds = []
+  let finalArr = []
+  let alreadyIn = []
   let postFilteredData = {
       user_id:postData.user_id,
       type:postData.type,
@@ -166,16 +168,25 @@ export const makePost = postData => dispatch => {
       post:postData.post,
       description:postData.description
   }
-//Posts are made here
+     alreadyIn = postData.alreadyIn
+  //Posts are made here
+    tagIds =  await arrayLoopAxios(postData.notIn)
+
+    finalArr = alreadyIn.concat(tagIds)
   axios
     .post('/posts',postFilteredData)
-      .then(()=> {
-    //posts tags and returns an array of ids
-      tagIds =  arrayLoopAxios(postData.tags)
-      console.log('TagIds',tagIds)
+      .then((res)=> {
+        console.log('post id :D',res.data.id)    
       })
       .then(()=> {
-        //loads posts after a post is made
+        console.log('AlreaydIn @ actions', postData.alreadyIn[0])
+        console.log('notIn @ actions', tagIds[0])
+
+      console.log('Final',finalArr)
+
+      })
+      .then(() => {
+
         dispatch(loadPosts())
       })
 
