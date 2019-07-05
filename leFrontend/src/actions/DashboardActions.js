@@ -204,23 +204,20 @@ dispatch({
 }
 
 const arrayLoopAxios = arr => {
+  let something;
+      axios.post('/tags',{name:arr})
+      .then(res => {
+        console.log('THIS IS RES',res)
+      })
 
-  arr.forEach(tag => {
-  axios.post('/tags',{name:tag})
 
-  })
-  // let tagIdsArr = arr.map(tag => {
-  //   axios.post("/tags",{name:tag})
-  //     .then(res => {
-  //       console.log(typeof res.data.id)
-  //       apple.push(res.data.id)
-  //   })
-  //   return tagIdsArr
-  //
-  // })
-  return
+
+
+  return;
 
 }
+
+
 // we got arr of tags  and we can look up a tag by name
 // we need to match the tag in the arr to the name then add the post id with the tag id
 
