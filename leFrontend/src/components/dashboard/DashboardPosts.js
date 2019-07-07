@@ -9,7 +9,6 @@ let defaultUser= "https://a.1stdibscdn.com/archivesE/upload/f_30733/f_8876473150
 export default class DashboardPosts extends Component {
 state = {
   allTags:[]
-
 }
 componentDidMount(){
   this.props.loadPosts()
@@ -22,7 +21,7 @@ embed = str => {
   let final ="https://www.youtube.com/embed/"+split[1]
   return final
 }
-
+//we need a tag id. Need to fit this into the load posts so it becomes linked
 getTag = id => this.props.tags.filter(tag => tag.post_id === id).map(el => el.name)
 
 listTags = arr => {
@@ -35,6 +34,7 @@ listTags = arr => {
       {tags}
       </ul>
     )
+
 }
 // addFollower =e => {
 //   e.preventDefault();

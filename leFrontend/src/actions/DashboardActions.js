@@ -122,17 +122,15 @@ export const loadCurrent = () => dispatch => {
 
 ///BEGINNING OF ACTUAL USEFUL DASHBOARD TYPES////
 
-export const loadPosts = () => dispatch => {
+export const loadPosts = () => async dispatch => {
   // debugger
-  axios
-    .get('/posts/followings')
+  let res  = await axios.get('/posts/followings')
+  dispatch({
+    type:LOAD_POSTS,
+    posts:res.data.body
+  })
 
-      .then(res =>
-        dispatch({
-          type:LOAD_POSTS,
-          posts:res.data.body
-        })
-      )
+
 }
 
 export const fetchTags =() => dispatch => {
@@ -211,6 +209,6 @@ export const linkPostwithTags = (id,tags) => async dispatch => {
    })
    promises.push(req)
  })
- await axios.all(promises)
- return true;
+  let links = await axios.all(promises)
+ return links
 }
