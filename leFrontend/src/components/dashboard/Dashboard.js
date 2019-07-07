@@ -32,7 +32,8 @@ onSubmit = e => {
     password:this.state.passInput,
     email:this.state.emailInput
   }
-  this.props.newUser(newUserData)
+  this.props.newUser(newUserData);
+  this.props.fetchTags();
 
 }
 logMeOut = () => {

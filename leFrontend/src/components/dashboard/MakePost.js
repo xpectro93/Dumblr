@@ -98,8 +98,8 @@ export default class MakePost extends Component {
       caption:"",
       tags: ""
     });
-    setTimeout(() => this.forceUpdate(), 1000);
-    
+    window.location ='/'
+
   }
 
   typeNull = e => {
