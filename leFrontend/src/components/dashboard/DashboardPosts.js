@@ -47,7 +47,7 @@ listTags = arr => {
 // }
 
 render(){
-  console.log(this.props.posts);
+  console.log('props @ dashposts',this.props);
   let postList= this.props.posts ? this.props.posts.map(post => {
     // console.log(post);
     if(post.type ==="PHOTO"){

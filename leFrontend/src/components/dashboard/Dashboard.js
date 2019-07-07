@@ -38,11 +38,12 @@ onSubmit = e => {
 logMeOut = () => {
   this.props.logout()
   // this.props.checkAuthenticateStatus()
-  window.location='/'
+  window.location = '/'
 }
 
 
 render(){
+  console.log('Props at dashboard', this.props)
 
 // let users = this.props.users.map(user => {
 //   return <p key={user.id}>{user.username}</p>
@@ -56,7 +57,6 @@ render(){
       <button type="submit" onClick={this.logMeOut}>logout</button>
         <MakePostContainer />
         <DashboardPostsContainer/>
-
       </div>
 
       <div className="right-dash">
