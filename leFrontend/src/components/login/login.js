@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import LoginNav from './LoginNav'
 import App from '../../App.js'
-import "../../css/Login.css"
+// import "../../css/Login.css"
 import  { withRouter } from 'react-router-dom'
 import output from './output.gif';
 // import output2 from './output2.gif';

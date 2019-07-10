@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './css/NavBar.css'
 import { NavLink } from 'react-router-dom'
 import output from './output.gif';
 const style = {
   width:"40px"
 }
-export const NavBar = () => {
+export default class NavBar extends Component {
+  state = {
+    navInput:''
+  }
+  handleChange = e => {
+    e.preventDefault();
+    this.setState({
+      [e.target.id]:e.target.value
+
+    })
+  }
+// export const NavBar = () => {
   // state = {
   //   searchInput:""
   // }
@@ -55,13 +66,15 @@ export const NavBar = () => {
 // case SEARCH_RES
 //     searchResults:action.payload
 
+render(){
+  console.log('State at nav', this.state)
   return(
     <nav>
       <div className="navbar">
       <div id="navbar1">
          <NavLink to='/dashboard' ><img src={output} alt="leLogo"style={style}/> </NavLink>
          <form>
-        <input name="searchInput" id="nav-input" type="text"/>
+        <input  id="navInput" onChange={this.handleChange} type="text"/>
         </form>
         </div>
         <div id="navbar2">
@@ -73,4 +86,6 @@ export const NavBar = () => {
       </div>
     </nav>
   )
+}
+
 }

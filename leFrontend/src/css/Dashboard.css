@@ -217,14 +217,14 @@ p {
 #recommended {
   width:100%;
   height:240px;
-  /* background: orange; */
+  background: orange;
   border-radius: 4px;
 
 }
 #radar {
   width:100%;
   height:540px;
-  /* background: yellow; */
+  background: yellow;
   border-radius: 4px;
   margin-top: 5px;
 }

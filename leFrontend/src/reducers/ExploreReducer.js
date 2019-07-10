@@ -1,5 +1,3 @@
-import { LOAD_ALL } from '../actions/ExploreActions';
-
 
 // const normalizeData = arr => {
 //   let obj = {};
@@ -18,11 +16,11 @@ const ExploreReducer = (state = initialState , action) => {
   Object.freeze(state);
   switch (action.type) {
 
-    case LOAD_ALL:
-      return {
-        ...state,
-        posts:action.posts
-      }
+    // case LOAD_ALL:
+    //   return {
+    //     ...state,
+    //     posts:action.posts
+    //   }
     default:
       return state
   }

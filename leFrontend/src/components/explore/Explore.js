@@ -1,33 +1,23 @@
 import React, { Component } from 'react';
-import "../../css/Explore.css";
-// import axios from "axios"
+import M from 'materialize-css'
 
 class Explore extends Component {
 state = {
-  emailInput:"",
-  userInput:'',
-  passInput:''
-
+  posts:[]
 }
 componentDidMount(){
-  this.props.loadAll()
-  // this.props.loadRand()
+  this.props.loadPosts()
+  document.addEventListener('DOMContentLoaded', function () {
+     var elems = document.querySelectorAll('.sidenav');
+     M.Sidenav.init(elems);
+   });
 }
-
-
-
-
-
-
 render(){
-  console.log(this.props.posts)
 
   return(
-    <div className="Explore">
-      <h1>You are exploring</h1>
 
+    <h1>Exploring</h1>
 
-    </div>
   )
   }
 }

@@ -1,24 +1,21 @@
 import Explore from "./Explore";
 import { connect } from "react-redux";
-// import { loadPosts } from "../../actions/ExploreActions";
-import { loadAll, loadRand } from '../../actions/ExploreActions'
+import  { loadPosts } from  "../../actions/DashboardActions"
 import { checkAuthenticateStatus } from "../../actions/DashboardActions"
 
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state, ownProps) => {
 
   return {
-    posts:state.explore.posts,
+    posts:state.dashboard.posts,
     currentUser:state.dashboard.currentUser
-//
   };
 
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadAll: () => dispatch(loadAll()),
-    loadRand:() =>dispatch(loadRand()),
+    loadPosts: () =>dispatch(loadPosts()),
     checkAuthenticateStatus:()=>dispatch(checkAuthenticateStatus())
   };
 };

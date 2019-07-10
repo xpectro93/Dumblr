@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
 
-import { NavBar } from './NavBar.js'
+import NavBar from './NavBar.js'
 
 // import loginContainer from './components/login/loginContainer.js'
 import Search from './components/search/Search.js'
