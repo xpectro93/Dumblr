@@ -5,7 +5,8 @@ const { getAllTags,
         createTag,
         getTagsByPost,
         getAllTagsOfPost,
-        createPostTag
+        createPostTag,
+        getAllTagPostLinks
     } = require('../db/queries/tagsQueries.js')
 
 // TAGS
@@ -21,8 +22,12 @@ router.get('/posts', getAllTagsOfPost)
 //post a tag and post link
 router.post('/posts/', createPostTag)
 
+//Get Posts Links
+router.get('/posts/links/:id', getAllTagPostLinks)
+
 //GET api/tags/posts/:id
 router.get('/posts/:id', getTagsByPost)
+
 
 
  // // GET api/tags/:id (Gets a specific user by id)

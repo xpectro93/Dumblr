@@ -19,8 +19,8 @@ const getAllTags = (req, res, next) => {
 };
 
 const getATag = ( req, res, next ) => {
-  let tagId = req.params.id;
-  db.any('SELECT * FROM tags WHERE name=$1',tagId)
+  let tagName = req.params.id;
+  db.any('SELECT * FROM tags WHERE name=$1',tagName)
     .then(data => {
       res.status(200)
         .json({
@@ -32,7 +32,7 @@ const getATag = ( req, res, next ) => {
     .catch(err => {
       res.status(404).json({
         status:404,
-        message: 'Could not FIND the Tag with the tag id: ' + tagId,
+        message: 'Could not FIND the Tag with the tag id: ' + tagName,
         error:err
       })
       next(err)
@@ -100,6 +100,25 @@ const getTagsByPost = ( req, res, next ) => {
      next(err)
     })
 };
+const getAllTagPostLinks = ( req,res,next ) => {
+  let tagId = req.params.id;
+  db.any('SELECT * FROM posts JOIN post_tags ON posts.id = post_tags.post_id WHERE post_tags.tag_id = $1',tagId)
+    .then(data => {
+      res.status(200).json({
+        status:'Success',
+        message:"Got All Tag Posts Links",
+        body:data
+      })
+    })
+    .catch(err => {
+      res.status(404).json({
+        status:404,
+        message: "Mission Failed",
+        error:err
+      })
+      next(err)
+    })
+}
 //similar to get all tags but it also gets the id of the posts in which they are linked to.
 const getAllTagsOfPost = (req, res, next) => {
   db.any('SELECT  post_id, name, tag_id FROM tags JOIN post_tags ON post_tags.tag_id = tags.id')
@@ -126,5 +145,6 @@ module.exports = {
   createTag,
   getTagsByPost,
   getAllTagsOfPost,
-  createPostTag
+  createPostTag,
+  getAllTagPostLinks
 }
