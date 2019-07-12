@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./leBackend/bin/www"
-
+    "start": "cd ./leBackend && npm start",
+    "heroku-postbuild": "cd ./leBackend && npm install && cd ../leFrontend && npm install --only=prod && npm run build"
   },
   "repository": {
     "type": "git",
