@@ -1,5 +1,3 @@
-
-// change this
 import * as APIUtil from '../util/utilsLogin.js';
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';

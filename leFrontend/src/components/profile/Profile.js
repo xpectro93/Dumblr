@@ -55,7 +55,6 @@ class Profile extends Component {
     this.props.history.push("/Login")
   }
   render(){
-    console.log(this.props.posts);
     return(
       <>
       <div className ="profile">

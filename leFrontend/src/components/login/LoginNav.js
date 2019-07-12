@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 import "../../css/Login.css"
-import output from './output.gif';
+// import output from './output.gif';
 import output1 from './output1.gif';
 const style = {
   width:"50px"

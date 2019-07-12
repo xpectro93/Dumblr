@@ -1,12 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-
-// getUsers = async () => {
-//     let res = await axios.get("https://reqres.in/api/users?page=1");
-//     let { data } = res.data;
-//     this.setState({ users: data });
-// };
-
 
 const defaultPic ="https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88764731508867994191/UV_master.jpg?width=768"
 export default class MakePost extends Component {
@@ -58,9 +50,7 @@ export default class MakePost extends Component {
   }
   onSubmitPost = async e => {
     e.preventDefault();
-
     let tagArr;
-    let answer;
     tagArr =this.state.tags.split(" ").filter(Boolean)
     tagArr = tagArr.map(tag => tag.replace('#',''))
     //has ids of tags already in;
@@ -110,8 +100,6 @@ export default class MakePost extends Component {
   }
 
   render(){
-    // console.log(this.props.allTags)
-
     if(this.state.type==="TEXT"){
       return (
         <div id="make-postBox">

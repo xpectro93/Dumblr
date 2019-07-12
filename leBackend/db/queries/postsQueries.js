@@ -1,7 +1,7 @@
 const db = require('./index.js');
 
 const getAllPosts = (req, res, next) => {
-  console.log(req.user);
+
   db.any('SELECT * FROM posts')
     .then(data => {
 

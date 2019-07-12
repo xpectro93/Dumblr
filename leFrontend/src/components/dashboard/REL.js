@@ -36,7 +36,6 @@ export default class Rel extends Component {
     axios
       .post("/likes/",likeData)
         .then(res => {
-          console.log(res);
         })
         this.setState({
           liked:true
@@ -54,7 +53,6 @@ export default class Rel extends Component {
     axios
     .delete(`/posts/${this.props.post.id}`)
       .then(res => {
-        console.log(res);
       })
       .then(()=> {
         this.props.loadPosts()

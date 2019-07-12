@@ -12,12 +12,11 @@ export const ALL_TAGS = "ALL_TAGS"
 ///////////////////////////////USER AND LOGIN USER ////////
 export const logout = () => dispatch => {
   axios
-    .post("/session/logout")
+    .post("/api/session/logout")
     .then(() => {
       Auth.deauthenticateUser();
     })
     .then(() => {
-      console.log("in logout");
       checkAuthenticateStatus();
     });
 }
@@ -26,7 +25,7 @@ export const logout = () => dispatch => {
 export const checkAuthenticateStatus = () => dispatch => {
 
   axios
-    .get("/session/isLoggedIn").then(user => {
+    .get("/api/session/isLoggedIn").then(user => {
     if (user.data.id === +Auth.getToken()){
 
       dispatch({
@@ -51,7 +50,7 @@ export const checkAuthenticateStatus = () => dispatch => {
 export const newUser = newUserData => dispatch => {
 
   axios
-  .post("/session/new", newUserData)
+  .post("/api/session/new", newUserData)
     .then(res => {
 
       dispatch({
@@ -60,9 +59,9 @@ export const newUser = newUserData => dispatch => {
       })
 
       axios
-      .post("/session/login",{username:newUserData.username, password:newUserData.password})
+      .post("/api/session/login",{username:newUserData.username, password:newUserData.password})
         .then(res => {
-          console.log(res);
+
           Auth.authenticateUser(res.data.id);
           dispatch({
             type:LOG_IN,
@@ -71,11 +70,10 @@ export const newUser = newUserData => dispatch => {
         })
         .then(()=> {
           axios
-            .post("/followings",{user_id:+Auth.getToken(),follower_id:+Auth.getToken()})
+            .post("/api/followings",{user_id:+Auth.getToken(),follower_id:+Auth.getToken()})
 
         })
       .then(()=> {
-        console.log('in new User');
         checkAuthenticateStatus()
       })
     })
@@ -84,9 +82,9 @@ export const newUser = newUserData => dispatch => {
 
 export const logIn = logInData => dispatch => {
   axios
-  .post("/session/login", logInData)
+  .post("/api/session/login", logInData)
     .then(res => {
-      console.log('res of login', res.data);
+
       Auth.authenticateUser(res.data.id);
       dispatch({
         type:LOG_IN,
@@ -95,7 +93,7 @@ export const logIn = logInData => dispatch => {
 
     })
     .then(()=> {
-      console.log('check auth at login');
+
       checkAuthenticateStatus();
 
     })
@@ -105,7 +103,7 @@ export const logIn = logInData => dispatch => {
 }
 export const loadCurrent = () => dispatch => {
   axios
-  .get(`/users/${+Auth.getToken()}`)
+  .get(`/api/users/${+Auth.getToken()}`)
     .then(res => {
       dispatch({
         type:CURRENT_USER,
@@ -124,7 +122,7 @@ export const loadCurrent = () => dispatch => {
 
 export const loadPosts = () => async dispatch => {
   // debugger
-  let res  = await axios.get('/posts/followings')
+  let res  = await axios.get('/api/posts/followings')
   dispatch({
     type:LOAD_POSTS,
     posts:res.data.body
@@ -136,7 +134,7 @@ export const loadPosts = () => async dispatch => {
 export const fetchTags =() => dispatch => {
 
  axios
-    .get('tags/posts/')
+    .get('/api/tags/posts/')
       .then(res => {
         dispatch({
           type:FETCH_TAGS,
@@ -146,7 +144,7 @@ export const fetchTags =() => dispatch => {
 }
 export const allTags = () => dispatch => {
   axios
-    .get('/tags/')
+    .get('/api/tags/')
       .then(res => {
         dispatch({
           type:ALL_TAGS,
@@ -164,9 +162,8 @@ export const makePost = postData => async dispatch => {
       description:postData.description
       }
 
-    let postRes = await axios.post('/posts',postFilteredData)
-    let resp = await dispatch(linkPostwithTags(postRes.data.id, postData.tags));
-    console.log(resp)
+    let postRes = await axios.post('/api/posts',postFilteredData)
+    await dispatch(linkPostwithTags(postRes.data.id, postData.tags));
     dispatch(loadPosts())
 
 }
@@ -174,7 +171,7 @@ export const makePost = postData => async dispatch => {
 ///USELESS type that was used to learn redux
 export const fetchUsers = () => dispatch => {
   axios
-  .get("/users")
+  .get("/api/users")
     .then(res =>
       dispatch({
         type:FETCH_USERS,
@@ -189,7 +186,7 @@ export const arrayLoopAxios =  arr => async dispatch => {
     arr.forEach( tag => {
      let req =  axios({
        method: 'POST',
-       url:`/tags`,
+       url:`/api/tags`,
        data: {name:tag}
      })
      promises.push(req)
@@ -204,7 +201,7 @@ export const linkPostwithTags = (id,tags) => async dispatch => {
  tags.forEach( tag => {
    let req =  axios({
      method: 'POST',
-     url:`/tags/posts`,
+     url:`/api/tags/posts`,
      data: {tag_id:tag, post_id:id}
    })
    promises.push(req)

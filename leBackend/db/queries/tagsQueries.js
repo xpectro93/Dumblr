@@ -44,7 +44,6 @@ const createTag = (req, res, next ) => {
 
     db.one('INSERT INTO tags(name) VALUES(${name}) RETURNING id', req.body)
     .then((data)=> {
-        console.log(data.id)
       res.status(200)
         .json({
           status:"Success",
@@ -102,7 +101,7 @@ const getTagsByPost = ( req, res, next ) => {
 };
 const getAllTagPostLinks = ( req,res,next ) => {
   let tagId = req.params.id;
-  db.any('SELECT * FROM posts JOIN post_tags ON posts.id = post_tags.post_id WHERE post_tags.tag_id = $1',tagId)
+  db.any('SELECT user_id, username, posts.id AS post_id,type, title, description, post, pic_url,post_tags.tag_id FROM posts JOIN post_tags ON posts.id = post_tags.post_id JOIN users ON posts.user_id = users.id WHERE post_tags.tag_id = $1',tagId)
     .then(data => {
       res.status(200).json({
         status:'Success',

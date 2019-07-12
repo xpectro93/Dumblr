@@ -36,20 +36,10 @@ listTags = arr => {
     )
 
 }
-// addFollower =e => {
-//   e.preventDefault();
-//   let obj = {
-//     user_id: 12 ,
-//     follower_id:Auth.getToken(),
-//   }
-//
-//   this.props.addfollower(obj)
-// }
 
 render(){
 
   let postList= this.props.posts ? this.props.posts.map(post => {
-    // console.log(post);
     if(post.type ==="PHOTO"){
       return (  <div id="lePost" key = {post.id}>
                 <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />

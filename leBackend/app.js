@@ -44,14 +44,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 ///ADD Routes here =^-^=
-app.use('/', index);
-app.use('/blogs', blogs);
-app.use('/users', users);
-app.use('/posts', posts);
-app.use('/tags', tags);
-app.use('/likes', likes);
-app.use('/followings', followings);
-app.use('/session', sess)
+app.use('/api/', index);
+app.use('/api/blogs', blogs);
+app.use('/api/users', users);
+app.use('/api/posts', posts);
+app.use('/api/tags', tags);
+app.use('/api/likes', likes);
+app.use('/api/followings', followings);
+app.use('/api/session', sess)
 
 
 // catch 404 and forward to error handler
