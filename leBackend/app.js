@@ -29,6 +29,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser("This is a secret"));
 
+
+app.use(express.static(path.join(__dirname, "../leFrontend/build")));
+
 app.use(
   session({
     secret: "This is a secret",
@@ -39,8 +42,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(express.static(path.join(__dirname, "./leFrontend/build")));
 
 
 ///ADD Routes here =^-^=
