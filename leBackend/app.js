@@ -40,7 +40,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 
 ///ADD Routes here =^-^=
@@ -52,6 +52,10 @@ app.use('/api/tags', tags);
 app.use('/api/likes', likes);
 app.use('/api/followings', followings);
 app.use('/api/session', sess)
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "../leFrontend/build/index.html"));
+});
 
 
 // catch 404 and forward to error handler

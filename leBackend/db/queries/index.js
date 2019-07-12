@@ -1,3 +1,7 @@
 const pgp = require('pg-promise')({});
-const db = pgp('postgres://localhost:5432/dumblr');
+
+const connectionString = process.env.DATABASE_URL;
+
+const db = pgp(connectionString);
+
 module.exports = db
