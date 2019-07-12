@@ -54,7 +54,7 @@ app.use('/api/followings', followings);
 app.use('/api/session', sess)
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "../leFrontend/build/index.html"));
+  res.sendFile(path.join(__dirname, "../leFrontend/build/index.html"));
 });
 
 
