@@ -65,7 +65,7 @@ export default class  Search extends Component {
       }else if (post.type==="LINK"){
         return (
           <div id="lePost" key = {post.post_id}>
-                    <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
+                    <img src={post.pic_url ? post.pic_url:(defaultUser)} alt="poster profile pic" />
 
                     <div id="aPost" key={post.post_id}>
                     <h3>{post.username}</h3>
