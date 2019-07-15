@@ -1,6 +1,6 @@
 const pgp = require('pg-promise')({});
 
-const connectionString = pgp(process.env.DATABASE_URL || 'postgres://localhost/dumblr');
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost/envizo';
 
 const db = pgp(connectionString);
 
