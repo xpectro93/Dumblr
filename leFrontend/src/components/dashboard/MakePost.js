@@ -49,10 +49,9 @@ export default class MakePost extends Component {
     })
   }
   onSubmitPost = async e => {
-
+    e.preventDefault();
     try {
 
-      e.preventDefault();
       let tagArr;
       tagArr =this.state.tags.split(" ").filter(Boolean)
       tagArr = tagArr.map(tag => tag.replace('#',''))
@@ -69,10 +68,12 @@ export default class MakePost extends Component {
           notIn.push(tag)
         }
       })
-
+      console.log('NotIn',notIn)
+      console.log('alreadyIn',alreadyIn)
       let response = await this.props.arrayLoopAxios(notIn)
       let cleanNot = response.map(prom => prom.data.id)
       let final = cleanNot.concat(alreadyIn)
+      console.log('final', final)
 
       let postData = {
         user_id:this.props.currentUser.id,
@@ -82,9 +83,9 @@ export default class MakePost extends Component {
         type:this.state.type,
         description:this.state.description.length === 0 ? null : this.state.description
       };
-      this.props.makePost(postData)
+      await this.props.makePost(postData)
 
-      this.setState({
+      await this.setState({
         type:"",
         title: "",
         post:"",
@@ -92,6 +93,8 @@ export default class MakePost extends Component {
         tags: ""
       });
       window.location ='/'
+      // setTimeout(function(){ window.location ='/' }, 750)
+
 
     }catch(err){
       alert(err)
