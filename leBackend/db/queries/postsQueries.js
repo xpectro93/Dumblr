@@ -162,7 +162,7 @@ const getPostsByFollowing = ( req, res, next ) => {
   db.any("SELECT posts.*, users.pic_url, bio , username FROM posts JOIN users ON posts.user_id = users.id JOIN followings ON users.id = followings.user_id AND follower_id = $1 ORDER BY publish_date desc", userId)
   // db.any("SELECT posts.* FROM posts JOIN followings ON posts.user_id = followings.user_id AND follower_id =$1", userId)
     .then(data => {
-      if(data.length<1){
+      if(data.length < 1){
         res.status(200).json({
           status:200,
           message:"Theres nuthin' hea"
@@ -175,11 +175,7 @@ const getPostsByFollowing = ( req, res, next ) => {
       })
     })
     .catch(err => {
-      res.status(404).json({
-        status:404,
-        message:'Something Went wrong! Could not GET posts by followee id'
-      })
-     next(err)
+      return next(err)
     })
 };
 

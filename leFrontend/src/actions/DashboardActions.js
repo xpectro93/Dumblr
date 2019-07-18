@@ -121,12 +121,16 @@ export const loadCurrent = () => dispatch => {
 ///BEGINNING OF ACTUAL USEFUL DASHBOARD TYPES////
 
 export const loadPosts = () => async dispatch => {
-  // debugger
-  let res  = await axios.get('/api/posts/followings')
-  dispatch({
-    type:LOAD_POSTS,
-    posts:res.data.body
-  })
+  try {
+    let res  = await axios.get('/api/posts/followings')
+    dispatch({
+      type:LOAD_POSTS,
+      posts:res.data.body
+    })
+  } catch(err) {
+    alert(err);
+  }
+
 
 
 }
@@ -161,10 +165,14 @@ export const makePost = postData => async dispatch => {
       post:postData.post,
       description:postData.description
       }
+    try {
+      let postRes = await axios.post('/api/posts',postFilteredData)
+      await dispatch(linkPostwithTags(postRes.data.id, postData.tags));
+      dispatch(loadPosts())
+    }catch(err){
+      alert(err)
+    }
 
-    let postRes = await axios.post('/api/posts',postFilteredData)
-    await dispatch(linkPostwithTags(postRes.data.id, postData.tags));
-    dispatch(loadPosts())
 
 }
 
@@ -181,31 +189,42 @@ export const fetchUsers = () => dispatch => {
 }
 
 export const arrayLoopAxios =  arr => async dispatch => {
-
+  try {
     let promises = [];
     arr.forEach( tag => {
-     let req =  axios({
-       method: 'POST',
-       url:`/api/tags`,
-       data: {name:tag}
-     })
-     promises.push(req)
+      let req =  axios({
+        method: 'POST',
+        url:`/api/tags`,
+        data: {name:tag}
+      })
+      promises.push(req)
     })
     let results = await axios.all(promises)
 
     return results
+
+  }catch(err){
+    alert(err)
+  }
 }
 export const linkPostwithTags = (id,tags) => async dispatch => {
 
- let promises = [];
- tags.forEach( tag => {
-   let req =  axios({
-     method: 'POST',
-     url:`/api/tags/posts`,
-     data: {tag_id:tag, post_id:id}
-   })
-   promises.push(req)
- })
-  let links = await axios.all(promises)
- return links
+  try {
+    let promises = [];
+    tags.forEach( tag => {
+      let req =  axios({
+        method: 'POST',
+        url:`/api/tags/posts`,
+        data: {tag_id:tag, post_id:id}
+      })
+      promises.push(req)
+    })
+    let links = await axios.all(promises)
+    return links
+
+  }catch(err){
+    alert(err)
+  }
+
+
 }

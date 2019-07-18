@@ -49,46 +49,55 @@ export default class MakePost extends Component {
     })
   }
   onSubmitPost = async e => {
-    e.preventDefault();
-    let tagArr;
-    tagArr =this.state.tags.split(" ").filter(Boolean)
-    tagArr = tagArr.map(tag => tag.replace('#',''))
-    //has ids of tags already in;
-    let alreadyIn = []
-    //has tags that need to be added;
-    let notIn = []
 
-    //adds to alreadyIn and notIn arrays
-    tagArr.forEach(tag => {
-      if(this.props.allTags[tag]){
-        alreadyIn.push(this.props.allTags[tag])
-      }else{
-        notIn.push(tag)
-      }
-    })
+    try {
 
-    let response = await this.props.arrayLoopAxios(notIn)
-    let cleanNot = response.map(prom => prom.data.id)
-    let final = cleanNot.concat(alreadyIn)
+      e.preventDefault();
+      let tagArr;
+      tagArr =this.state.tags.split(" ").filter(Boolean)
+      tagArr = tagArr.map(tag => tag.replace('#',''))
+      //has ids of tags already in;
+      let alreadyIn = []
+      //has tags that need to be added;
+      let notIn = []
 
-    let postData = {
-      user_id:this.props.currentUser.id,
-      title:this.state.title,
-      post: this.state.post,
-      tags:final,
-      type:this.state.type,
-      description:this.state.description.length === 0 ? null : this.state.description
-    };
-    this.props.makePost(postData)
+      //adds to alreadyIn and notIn arrays
+      tagArr.forEach(tag => {
+        if(this.props.allTags[tag]){
+          alreadyIn.push(this.props.allTags[tag])
+        }else{
+          notIn.push(tag)
+        }
+      })
 
-    this.setState({
-      type:"",
-      title: "",
-      post:"",
-      caption:"",
-      tags: ""
-    });
-    window.location ='/'
+      let response = await this.props.arrayLoopAxios(notIn)
+      let cleanNot = response.map(prom => prom.data.id)
+      let final = cleanNot.concat(alreadyIn)
+
+      let postData = {
+        user_id:this.props.currentUser.id,
+        title:this.state.title,
+        post: this.state.post,
+        tags:final,
+        type:this.state.type,
+        description:this.state.description.length === 0 ? null : this.state.description
+      };
+      this.props.makePost(postData)
+
+      this.setState({
+        type:"",
+        title: "",
+        post:"",
+        caption:"",
+        tags: ""
+      });
+      window.location ='/'
+
+    }catch(err){
+      alert(err)
+    }
+
+
 
   }
 

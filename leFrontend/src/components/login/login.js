@@ -88,8 +88,8 @@ class Login extends Component {
           <input id="sign-input" placeholder="Username"  onChange={this.onChange} type="text" name="userInput" vaue={this.state.userInput}/>
           <input className="sign-input1" placeholder="Password"  onChange={this.onChange} type="password" name="passInput" vaue={this.state.passInput}/>
 
-          <button id="" type="submit">Log In</button>
-          <button id="" onClick={this.backtotop}>Back</button>
+          <button id="log" type="submit">Log In</button>
+          <button id="back" onClick={this.backtotop}>Back</button>
         </form>
 
         </div>
