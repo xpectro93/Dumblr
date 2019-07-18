@@ -112,7 +112,7 @@ export default class  Search extends Component {
     return (
       <div className ='endMe'>
 
-      <h1>{this.props.match.params.id.toUpperCase()?this.props.match.params.id.toUpperCase():'wait for it'} </h1>
+      <h1 id="tagTitle">{this.props.match.params.id.toUpperCase()?this.props.match.params.id.toUpperCase():'wait for it'} </h1>
       {postList}
     </div>
   )

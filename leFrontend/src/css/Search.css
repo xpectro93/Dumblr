@@ -18,7 +18,10 @@ h1 {
   margin-top:90px;
   opacity: 0.1
 }
-.modal>h1 {
-  opacity:1.0;
-  background-color:red;
+#tagTitle {
+  font-size: 72px;
+  text-align: center;
+  background: -webkit-linear-gradient(#b828e0, #286be0);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
 }
