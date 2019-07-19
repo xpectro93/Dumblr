@@ -22,9 +22,9 @@ export default class  Search extends Component {
 
 
   render(){
-    // console.log(this.state.posts)
+
     let {posts} = this.state
-    console.log(posts)
+
     let postList = posts ? posts.map(post => {
 
       if(post.type ==="PHOTO"){

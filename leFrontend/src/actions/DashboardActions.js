@@ -128,7 +128,7 @@ export const loadPosts = () => async dispatch => {
       posts:res.data.body
     })
   } catch(err) {
-    alert(err);
+    console.log(err);
   }
 
 
@@ -170,7 +170,7 @@ export const makePost = postData => async dispatch => {
       await dispatch(linkPostwithTags(postRes.data.id, postData.tags));
       dispatch(loadPosts())
     }catch(err){
-      alert(err)
+        console.log(err)
     }
 
 
@@ -204,7 +204,7 @@ export const arrayLoopAxios =  arr => async dispatch => {
     return results
 
   }catch(err){
-    alert(err)
+    console.log(err)
   }
 }
 export const linkPostwithTags = (id,tags) => async dispatch => {
@@ -223,7 +223,7 @@ export const linkPostwithTags = (id,tags) => async dispatch => {
     return links
 
   }catch(err){
-    alert(err)
+      console.log(err)
   }
 
 

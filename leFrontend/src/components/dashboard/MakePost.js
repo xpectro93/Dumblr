@@ -97,7 +97,7 @@ export default class MakePost extends Component {
 
 
     }catch(err){
-      alert(err)
+      console.log(err)
     }
 
 
