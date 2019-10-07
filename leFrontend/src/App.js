@@ -16,7 +16,7 @@ class App extends Component {
   //redirect for login prop for log(isLoggedIn===false)
 
   render() {
-
+    console.log("main app location")
 
       return (
         <div className="App">
