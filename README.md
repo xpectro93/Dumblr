@@ -16,3 +16,8 @@ Tumblr Clone aimed to replicate some features of tumblr.
 - Becrypt
 - Passport.
 
+Future iterations:
+
+Add socket.io
+
+
