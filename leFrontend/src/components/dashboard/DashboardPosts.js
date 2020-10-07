@@ -39,8 +39,8 @@ listTags = arr => {
 
 render(){
 
-  let postList= this.props.posts ? this.props.posts.map(post => {
-    if(post.type ==="PHOTO"){
+  let postList = this.props.posts ? this.props.posts.map(post => {
+    if(post.type === "PHOTO"){
       return (  <div id="lePost" key = {post.id}>
                 <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
 
@@ -60,7 +60,8 @@ render(){
                 </div>
                 </div>
             )
-    }else if (post.type==="TEXT"){
+    }
+    else if (post.type === "TEXT"){
       return (  <div id="lePost" key = {post.id}>
                 <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
 
@@ -81,7 +82,8 @@ render(){
                 </div>
                 </div>
             )
-    }else if (post.type==="LINK"){
+    }
+    else if (post.type === "LINK"){
       return (
         <div id="lePost" key = {post.id}>
                   <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
@@ -102,7 +104,8 @@ render(){
                   </div>
                   </div>
       )
-    }else if(post.type==="VIDEO"){
+    }
+    else if(post.type === "VIDEO"){
       return (
         <div id="lePost" key = {post.id}>
                   <img src={post.pic_url?post.pic_url:(this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultUser)} alt="poster profile pic" />
@@ -126,18 +129,14 @@ render(){
                   </div>
                   </div>
       )
-    }else{
+    }
+    else{
       return (<h1>WHAT TYPE OF POST IS THIS?</h1>)
     }
-
-
-
-
-
-
   }) : ""
+  // else return empty string
 
-  if(this.props.posts===undefined){
+  if(this.props.posts === undefined){
     return (
       <div id="lePost">
       <img src={defaultUser} alt="poster profile pic" />
@@ -150,7 +149,7 @@ render(){
 
   return (
     <>
-    {postList}
+    { postList }
     </>
   )
 
