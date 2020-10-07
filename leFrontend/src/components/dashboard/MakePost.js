@@ -112,7 +112,7 @@ export default class MakePost extends Component {
   }
 
   render(){
-    if(this.state.type==="TEXT"){
+    if(this.state.type === "TEXT"){
       return (
         <div id="make-postBox">
         <img src={this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultPic}alt="test"/>
@@ -134,7 +134,7 @@ export default class MakePost extends Component {
 
         </div>
       )
-    }else if(this.state.type==="PHOTO") {
+    }else if(this.state.type === "PHOTO") {
       return (
         <div id="make-postBox">
         <img src={this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultPic}alt="test"/>
@@ -154,7 +154,7 @@ export default class MakePost extends Component {
         </div>
         </div>
       )
-    }else if(this.state.type==="LINK"){
+    }else if(this.state.type === "LINK"){
       return (
         <div id="make-postBox">
         <img src={this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultPic}alt="test"/>
@@ -176,7 +176,7 @@ export default class MakePost extends Component {
         </div>
         </div>
       )
-    }else if(this.state.type==="VIDEO"){
+    }else if(this.state.type === "VIDEO"){
       return (
         <div id="make-postBox">
         <img src={this.props.currentUser.pic_url?this.props.currentUser.pic_url:defaultPic}alt="test"/>
